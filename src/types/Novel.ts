@@ -3,9 +3,9 @@ import { Publisher } from './Publisher';
 interface Novel {
   id: number;
   publisher: Publisher;
-  novelName: string;
+  name: string;
   totalScore: number;
-  firstPublishingDate: Date;
+  publishedDate: Date;
 }
 
 export type { Novel };
