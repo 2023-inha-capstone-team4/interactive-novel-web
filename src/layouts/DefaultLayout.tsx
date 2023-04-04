@@ -28,6 +28,30 @@ const Content = styled.div`
   margin: 0 auto;
   background-color: #ffffff;
   overflow-y: scroll;
+
+  /* 스크롤 바 */
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff6868;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(244, 86, 33, 0.1);
+  }
+
+  /* 좁은 화면에서 스크롤 바 숨기기 */
+  @media (max-width: 700px) {
+    -ms-overflow-style: none; /* IE */
+    scrollbar-width: none; /* Firefox */
+    /* Chrome */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 export default DefaultLayout;
