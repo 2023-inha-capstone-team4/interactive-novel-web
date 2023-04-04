@@ -5,9 +5,8 @@ import Section from '../../components/Section';
 import { useState } from 'react';
 import NovelCard from './NovelCard';
 import { Tab, Tabs } from '@mui/material';
-import FullWidthNovelCard from './FullWidthNovelCard';
 import TabPanel from '../../components/TabPanel';
-import styled from '@emotion/styled';
+import NovelList from '../../components/NovelList';
 
 /**
  * 메인 페이지 요소입니다.
@@ -141,26 +140,11 @@ const categories = [
  * 노벨 리스트 요소입니다.
  */
 function NovelListForCategory(props: NovelListForCategoryProps) {
-  return (
-    <StyledNovelList>
-      {dummyNovelList.map((novel: Novel) => (
-        <FullWidthNovelCard novel={novel} href="#" />
-      ))}
-    </StyledNovelList>
-  );
+  return <NovelList novels={dummyNovelList} />;
 }
 
 interface NovelListForCategoryProps {
   category: string;
 }
-
-const StyledNovelList = styled.ul`
-  padding-left: 0;
-  list-style: none;
-
-  & > * {
-    margin: 15px 15px;
-  }
-`;
 
 export default MainPage;
