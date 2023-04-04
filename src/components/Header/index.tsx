@@ -4,6 +4,7 @@ import { Collapse, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchBar from './SearchBar';
+import { Link } from 'react-router-dom';
 
 /**
  * 페이지의 Header 요소입니다.
@@ -18,7 +19,9 @@ function Header() {
   return (
     <>
       <StyledHeader>
-        <span>LOGO</span>
+        <Link to="/" style={{ textDecoration: 'none', color: '#000000' }}>
+          <span>LOGO</span>
+        </Link>
         <span>
           <IconButton onClick={() => console.log('Person Button clicked')}>
             <PersonIcon />
