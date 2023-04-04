@@ -8,16 +8,32 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
+import { ThemeProvider, createTheme } from '@mui/material';
+
+// MUI Theme
+const muiTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#ff6868',
+      contrastText: '#ffffff',
+    },
+  },
+  shape: {
+    borderRadius: 8,
+  },
+});
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<DefaultLayout />}>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Route>
-      </Routes>
+      <ThemeProvider theme={muiTheme}>
+        <Routes>
+          <Route path="/" element={<DefaultLayout />}>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
     </div>
   );
 }

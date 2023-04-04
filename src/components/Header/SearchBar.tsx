@@ -62,12 +62,6 @@ const SearchButton = styled(Button)`
   width: 50px;
   height: 30px;
   margin-left: 5px;
-  border-radius: 8px;
-  background-color: #ff6868;
-
-  &:hover {
-    background-color: #ff6868;
-  }
 `;
 
 export default SearchBar;
