@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import { Button } from '@mui/material';
 import styled from '@emotion/styled';
+import { Link, redirect } from 'react-router-dom';
+import PlainStyleLink from '../PlainStyleLink';
 
 /**
  * 검색 바 요소입니다.
@@ -20,7 +22,9 @@ function SearchBar() {
         onChange={handleTextFieldChange}
         placeholder="작품명, 작가, 태그 검색"
       />
-      <SearchButton variant="contained">검색</SearchButton>
+      <PlainStyleLink to={`/search?keyword=${searchTerm}`}>
+        <SearchButton variant="contained">검색</SearchButton>
+      </PlainStyleLink>
     </StyledSearchBar>
   );
 }
