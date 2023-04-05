@@ -9,6 +9,7 @@ import '@fontsource/roboto/700.css';
 import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
 import { ThemeProvider, createTheme } from '@mui/material';
+import SigninPage from './pages/SigninPage';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/" element={<MainPage />} />
+            <Route path="/signin" element={<SigninPage />} />
             <Route path="/search" element={<SearchPage />} />
           </Route>
         </Routes>
