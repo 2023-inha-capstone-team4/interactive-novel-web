@@ -4,16 +4,21 @@ import { Collapse, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchBar from './SearchBar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 /**
  * 페이지의 Header 요소입니다.
  */
 function Header() {
   const [searchBarDisplayed, displaySearchBar] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSearchBar = () => {
     displaySearchBar(!searchBarDisplayed);
+  };
+
+  const handleAccountButtonClick = () => {
+    navigate('/signin');
   };
 
   return (
@@ -23,7 +28,7 @@ function Header() {
           <span>LOGO</span>
         </Link>
         <span>
-          <IconButton onClick={() => console.log('Person Button clicked')}>
+          <IconButton onClick={handleAccountButtonClick}>
             <PersonIcon />
           </IconButton>
           <IconButton onClick={toggleSearchBar}>
