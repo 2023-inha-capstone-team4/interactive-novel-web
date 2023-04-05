@@ -1,5 +1,4 @@
-import styled from '@emotion/styled';
-import { Button, FilledInput, FormControl, InputLabel, OutlinedInput } from '@mui/material';
+import { Button, FormControl, InputLabel, OutlinedInput, Stack } from '@mui/material';
 
 /**
  * 로그인 영역입니다.
@@ -7,7 +6,7 @@ import { Button, FilledInput, FormControl, InputLabel, OutlinedInput } from '@mu
 function Signin() {
   return (
     <>
-      <StyledForm>
+      <Stack direction="column" spacing={2}>
         <FormControl>
           <InputLabel htmlFor="input-email">이메일</InputLabel>
           <OutlinedInput
@@ -31,20 +30,9 @@ function Signin() {
         <Button variant="contained" fullWidth>
           로그인
         </Button>
-      </StyledForm>
+      </Stack>
     </>
   );
 }
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  /* align-items: start; */
-
-  & > * {
-    margin-bottom: 15px;
-  }
-`;
 
 export default Signin;

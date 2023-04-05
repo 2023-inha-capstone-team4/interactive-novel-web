@@ -4,6 +4,7 @@ import TabPanel from '../../components/TabPanel';
 import Signin from './Signin';
 import Signup from './Signup';
 import styled from '@emotion/styled';
+import SocialLogin from './SocialLogin';
 
 /**
  * 로그인/회원가입 페이지입니다.
@@ -29,6 +30,7 @@ function SigninPage() {
           <Signup />
         </TabPanel>
       </TabPanels>
+      <SocialLogin />
     </>
   );
 }
