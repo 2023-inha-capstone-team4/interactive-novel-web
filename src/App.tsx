@@ -31,9 +31,9 @@ function App() {
         <Routes>
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/" element={<MainPage />} />
-            <Route path="/signin" element={<SigninPage />} />
             <Route path="/search" element={<SearchPage />} />
           </Route>
+          <Route path="/signin" element={<SigninPage />} />
         </Routes>
       </ThemeProvider>
     </div>
