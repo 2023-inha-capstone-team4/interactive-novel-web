@@ -1,6 +1,5 @@
 import { Novel } from '../../types/Novel';
 import HorizontalSlider from '../../components/HorizontalSlider';
-import NavBar from './NavBar';
 import Section from '../../components/Section';
 import { useState } from 'react';
 import NovelCard from './NovelCard';
@@ -14,7 +13,6 @@ import NovelList from '../../components/NovelList';
 function MainPage() {
   return (
     <>
-      <NavBar />
       <NewNovelsSection />
       <HotNovelsSection />
       <CategorizedNovels />

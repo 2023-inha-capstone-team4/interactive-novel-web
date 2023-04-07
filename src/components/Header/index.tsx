@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchBar from './SearchBar';
 import { Link, useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 /**
  * 페이지의 Header 요소입니다.
@@ -39,6 +40,7 @@ function Header() {
       <Collapse in={searchBarDisplayed}>
         <SearchBar />
       </Collapse>
+      <NavBar />
     </>
   );
 }
