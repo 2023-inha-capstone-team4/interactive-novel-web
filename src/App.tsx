@@ -10,6 +10,7 @@ import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
 import { ThemeProvider, createTheme } from '@mui/material';
 import SigninPage from './pages/SigninPage';
+import NovelDetailPage from './pages/NovelDetailPage';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -32,6 +33,7 @@ function App() {
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/" element={<MainPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/novel/:id" element={<NovelDetailPage />} />
           </Route>
           <Route path="/signin" element={<SigninPage />} />
         </Routes>
