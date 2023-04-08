@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 function Section(props: SectionProps) {
   return (
-    <section>
+    <section style={{ position: 'relative' }}>
       <SectionTitle>{props.title}</SectionTitle>
       <div>{props.children}</div>
     </section>

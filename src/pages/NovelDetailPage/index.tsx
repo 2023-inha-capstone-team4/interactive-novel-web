@@ -3,14 +3,20 @@ import { useParams } from 'react-router-dom';
 import { Novel } from '../../types/Novel';
 import NovelAPI from '../../api/NovelAPI';
 import Section from '../../components/Section';
-import { Box, CircularProgress, Stack } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import styled from '@emotion/styled';
 import { dateToString } from '../../utils/date';
 import PlayButton from './PlayButton';
+import BookmarkToggleButton from './BookmarkToggleButton';
 
 function NovelDetailPage() {
   const { id } = useParams();
   const [novel, setNovel] = useState<Novel>();
+  const [bookmarked, setBookmarked] = useState(false);
+
+  const toggleBookmark = () => {
+    setBookmarked(!bookmarked);
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -22,16 +28,27 @@ function NovelDetailPage() {
     });
   }, []);
 
+  // 로딩 뷰
   if (!novel) {
-    return <CircularProgress />;
+    return (
+      <Box height="300px" display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
     <>
       <Section title={novel.name}>
+        <Box sx={{ position: 'absolute', top: 0, right: 15 }}>
+          <BookmarkToggleButton value={bookmarked} onClick={toggleBookmark} />
+        </Box>
         <Stack direction="row" spacing={1} marginX="15px">
           <Author>{novel.publisher.name}</Author>
           <PublishedDate>{dateToString(novel.publishedDate)}</PublishedDate>
+          <RateScore>
+            평점 <b>{4.5}</b>
+          </RateScore>
         </Stack>
         <Box padding="15px">
           <Description>
@@ -54,6 +71,11 @@ const Author = styled.p`
 `;
 
 const PublishedDate = styled.p`
+  margin: 0;
+  font-size: 12px;
+`;
+
+const RateScore = styled.p`
   margin: 0;
   font-size: 12px;
 `;
