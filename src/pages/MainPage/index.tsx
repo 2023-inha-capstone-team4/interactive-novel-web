@@ -1,16 +1,29 @@
 import { Novel } from '../../types/Novel';
 import HorizontalSlider from '../../components/HorizontalSlider';
 import Section from '../../components/Section';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NovelCard from './NovelCard';
 import { Tab, Tabs } from '@mui/material';
 import TabPanel from '../../components/TabPanel';
 import NovelList from '../../components/NovelList';
+import { useLocation } from 'react-router-dom';
 
 /**
  * 메인 페이지 요소입니다.
  */
 function MainPage() {
+  const location = useLocation();
+
+  // URL Fragement 발견 시 해당 요소 위치로 스크롤
+  useEffect(() => {
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location.hash]);
+
   return (
     <>
       <NewNovelsSection />
@@ -68,7 +81,7 @@ function NewNovelsSection() {
   const [novels, setNovels] = useState(dummyNovelList);
 
   return (
-    <Section title="따끈따끈한 신규 작품">
+    <Section id="new" title="따끈따끈한 신규 작품">
       <HorizontalSlider>
         {novels.map((novel: Novel) => (
           <NovelCard novel={novel} href={`/novel/${novel.id}`} />
@@ -85,7 +98,7 @@ function HotNovelsSection() {
   const [novels, setNovels] = useState(dummyNovelList);
 
   return (
-    <Section title="인기 작품">
+    <Section id="hot" title="인기 작품">
       <HorizontalSlider>
         {novels.map((novel: Novel) => (
           <NovelCard novel={novel} href={`/novel/${novel.id}`} />
@@ -106,7 +119,7 @@ function CategorizedNovels() {
   };
 
   return (
-    <Section title="카테고리">
+    <Section id="category" title="카테고리">
       <Tabs value={currentTab} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
         {categories.map((category: string) => (
           <Tab label={category} />

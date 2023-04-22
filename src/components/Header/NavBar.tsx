@@ -10,13 +10,13 @@ function NavBar() {
     <StyledNav>
       <ul>
         <li>
-          <StyledLink to="/">신규</StyledLink>
+          <StyledLink to="/#new">신규</StyledLink>
         </li>
         <li>
-          <StyledLink to="/">인기</StyledLink>
+          <StyledLink to="/#hot">인기</StyledLink>
         </li>
         <li>
-          <StyledLink to="/">카테고리</StyledLink>
+          <StyledLink to="/#category">카테고리</StyledLink>
         </li>
       </ul>
       <StyledLink to="/bookmark" color={COLOR_PRIMARY}>

@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 function Section(props: SectionProps) {
   return (
-    <section style={{ position: 'relative' }}>
+    <section id={props.id} style={{ position: 'relative' }}>
       <Box marginY="30px">
         <SectionTitle>{props.title}</SectionTitle>
         <SectionDescription>{props.description}</SectionDescription>
@@ -15,6 +15,7 @@ function Section(props: SectionProps) {
 
 interface SectionProps {
   title: string;
+  id?: string;
   description?: string;
   children?: React.ReactNode;
 }
