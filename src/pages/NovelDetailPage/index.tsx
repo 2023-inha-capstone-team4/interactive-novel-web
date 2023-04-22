@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Novel } from '../../types/Novel';
 import NovelAPI from '../../api/NovelAPI';
 import Section from '../../components/Section';
@@ -44,7 +44,7 @@ function NovelDetailPage() {
           <BookmarkToggleButton value={bookmarked} onClick={toggleBookmark} />
         </Box>
         <Stack direction="row" spacing={1} marginX="15px">
-          <Author>{novel.publisher.name}</Author>
+          <Author to={`/publisher/${novel.publisher.id}`}>{novel.publisher.name}</Author>
           <PublishedDate>{dateToString(novel.publishedDate)}</PublishedDate>
           <RateScore>
             평점 <b>{4.5}</b>
@@ -64,7 +64,7 @@ function NovelDetailPage() {
   );
 }
 
-const Author = styled.p`
+const Author = styled(Link)`
   margin: 0;
   font-size: 14px;
   font-weight: bold;

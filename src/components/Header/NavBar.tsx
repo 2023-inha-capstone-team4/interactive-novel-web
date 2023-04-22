@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { COLOR_PRIMARY } from '../../utils/constant';
 
 /**
  * 네비게이션 바 요소입니다.
@@ -18,7 +19,7 @@ function NavBar() {
           <StyledLink to="/">카테고리</StyledLink>
         </li>
       </ul>
-      <StyledLink to="/" color="#ff6868">
+      <StyledLink to="/" color={COLOR_PRIMARY}>
         북마크
       </StyledLink>
     </StyledNav>

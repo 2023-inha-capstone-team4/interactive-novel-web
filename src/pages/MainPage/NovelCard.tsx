@@ -8,7 +8,7 @@ function NovelCard(props: NovelCardProps) {
       <Thumbnail src="http://www.sbs.com.au/theboat/images/fb-image.jpg" alt="thumbnail" />
       <TitleRow>
         <h3>{props.novel.name}</h3>
-        <p>{props.novel.publisher.name}</p>
+        <Link to={`/publisher/${props.novel.publisher.id}`}>{props.novel.publisher.name}</Link>
       </TitleRow>
       <Description>Based on the story by Nam Le, Adaptation by Matt Huynh</Description>
     </PlainStyleLink>

@@ -1,0 +1,52 @@
+[
+  {
+    "id": 5,
+    "publisher": {
+      "id": 1,
+      "name": "SBS"
+    },
+    "name": "The Boat",
+    "totalScore": 4.5,
+    "publishedDate": "2023-04-04T05:05:49.954Z"
+  },
+  {
+    "id": 4,
+    "publisher": {
+      "id": 1,
+      "name": "SBS"
+    },
+    "name": "The Boat",
+    "totalScore": 4.5,
+    "publishedDate": "2023-04-04T05:05:49.954Z"
+  },
+  {
+    "id": 3,
+    "publisher": {
+      "id": 1,
+      "name": "SBS"
+    },
+    "name": "The Boat",
+    "totalScore": 4.5,
+    "publishedDate": "2023-04-04T05:05:49.954Z"
+  },
+  {
+    "id": 2,
+    "publisher": {
+      "id": 1,
+      "name": "SBS"
+    },
+    "name": "The Boat",
+    "totalScore": 4.5,
+    "publishedDate": "2023-04-04T05:05:49.954Z"
+  },
+  {
+    "id": 1,
+    "publisher": {
+      "id": 1,
+      "name": "SBS"
+    },
+    "name": "The Boat",
+    "totalScore": 4.5,
+    "publishedDate": "2023-04-04T05:05:49.954Z"
+  }
+]

@@ -10,7 +10,9 @@ function FullWidthNovelCard(props: FullWidthNovelCardProps) {
       <div>
         <Title>{props.novel.name}</Title>
         <PublisherRow>
-          <p className="publisher">{props.novel.publisher.name}</p>
+          <Link to={`/publisher/${props.novel.publisher.id}`} className="publisher">
+            {props.novel.publisher.name}
+          </Link>
           <p className="date">{dateToString(props.novel.publishedDate)}</p>
         </PublisherRow>
         <Description>Based on the story by Nam Le, Adaptation by Matt Huynh</Description>

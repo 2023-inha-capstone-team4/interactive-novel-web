@@ -11,12 +11,15 @@ import SearchPage from './pages/SearchPage';
 import { ThemeProvider, createTheme } from '@mui/material';
 import SigninPage from './pages/SigninPage';
 import NovelDetailPage from './pages/NovelDetailPage';
+import ErrorPage from './pages/ErrorPage';
+import { COLOR_PRIMARY } from './utils/constant';
+import PublisherPage from './pages/PublisherPage';
 
 // MUI Theme
 const muiTheme = createTheme({
   palette: {
     primary: {
-      main: '#ff6868',
+      main: COLOR_PRIMARY,
       contrastText: '#ffffff',
     },
   },
@@ -34,8 +37,13 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/novel/:id" element={<NovelDetailPage />} />
+            <Route path="/publisher/:id" element={<PublisherPage />} />
           </Route>
           <Route path="/signin" element={<SigninPage />} />
+          <Route path="/" element={<DefaultLayout />}>
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage msg="존재하지 않는 페이지입니다." />} />
+          </Route>
         </Routes>
       </ThemeProvider>
     </div>
