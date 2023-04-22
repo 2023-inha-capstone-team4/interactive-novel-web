@@ -1,9 +1,13 @@
 import styled from '@emotion/styled';
+import { Box } from '@mui/material';
 
 function Section(props: SectionProps) {
   return (
     <section style={{ position: 'relative' }}>
-      <SectionTitle>{props.title}</SectionTitle>
+      <Box marginY="30px">
+        <SectionTitle>{props.title}</SectionTitle>
+        <SectionDescription>{props.description}</SectionDescription>
+      </Box>
       <div>{props.children}</div>
     </section>
   );
@@ -11,13 +15,20 @@ function Section(props: SectionProps) {
 
 interface SectionProps {
   title: string;
-  children: React.ReactNode;
+  description?: string;
+  children?: React.ReactNode;
 }
 
 const SectionTitle = styled.h1`
-  margin: 30px 15px 20px;
+  margin: 0px 15px;
   font-size: 20px;
   font-weight: bold;
+`;
+
+const SectionDescription = styled.p`
+  margin: 0px 15px 20px;
+  font-size: 12px;
+  color: #797979;
 `;
 
 export default Section;

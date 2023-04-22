@@ -14,6 +14,7 @@ import NovelDetailPage from './pages/NovelDetailPage';
 import ErrorPage from './pages/ErrorPage';
 import { COLOR_PRIMARY } from './utils/constant';
 import PublisherPage from './pages/PublisherPage';
+import BookmarkPage from './pages/BookmarkPage';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -38,6 +39,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/novel/:id" element={<NovelDetailPage />} />
             <Route path="/publisher/:id" element={<PublisherPage />} />
+            <Route path="/bookmark" element={<BookmarkPage />} />
           </Route>
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/" element={<DefaultLayout />}>

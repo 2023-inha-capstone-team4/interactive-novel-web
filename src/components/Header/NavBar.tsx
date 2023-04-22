@@ -19,7 +19,7 @@ function NavBar() {
           <StyledLink to="/">카테고리</StyledLink>
         </li>
       </ul>
-      <StyledLink to="/" color={COLOR_PRIMARY}>
+      <StyledLink to="/bookmark" color={COLOR_PRIMARY}>
         북마크
       </StyledLink>
     </StyledNav>
