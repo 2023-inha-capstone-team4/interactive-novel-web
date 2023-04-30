@@ -30,6 +30,8 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     needs: build
+    env:
+      AWS_EC2_METADATA_DISABLED: true
     steps:
       - name: Configure NCP credentials with AWS CLI
         run: |
