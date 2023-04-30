@@ -32,11 +32,9 @@ jobs:
     needs: build
     steps:
       - name: Configure NCP credentials with AWS CLI
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.NCP_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.NCP_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.NCP_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.NCP_SECRET_ACCESS_KEY }}
 
       - name: Upload to Object Storage
         run: >
