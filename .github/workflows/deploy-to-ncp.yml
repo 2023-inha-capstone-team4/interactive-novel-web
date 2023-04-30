@@ -4,8 +4,11 @@ on:
   push:
     branches: [main]
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-20.04
+    env:
+      CI: false # for 'npm run build'
+      AWS_EC2_METADATA_DISABLED: true
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,14 +28,8 @@ jobs:
         run: npm install
 
       - name: Build
-        run: CI=false npm run build
+        run: npm run build
 
-  deploy:
-    runs-on: ubuntu-20.04
-    needs: build
-    env:
-      AWS_EC2_METADATA_DISABLED: true
-    steps:
       - name: Configure NCP credentials with AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.NCP_ACCESS_KEY_ID }}
