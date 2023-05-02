@@ -1,0 +1,8 @@
+.layer_item {
+  list-style: none;
+}
+
+.layer_item:hover {
+  background-color: aliceblue;
+  cursor: pointer;
+}
