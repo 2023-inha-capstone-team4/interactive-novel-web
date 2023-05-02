@@ -1,11 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import DefaultLayout from './layouts/DefaultLayout';
 
-// MUI를 위한 Roboto 폰트 로드
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
 import { ThemeProvider, createTheme } from '@mui/material';
@@ -15,6 +10,13 @@ import ErrorPage from './pages/ErrorPage';
 import { COLOR_PRIMARY } from './utils/constant';
 import PublisherPage from './pages/PublisherPage';
 import BookmarkPage from './pages/BookmarkPage';
+import NovelViewerPage from './pages/NovelViewerPage';
+
+// MUI를 위한 Roboto 폰트 로드
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -42,6 +44,7 @@ function App() {
             <Route path="/bookmark" element={<BookmarkPage />} />
           </Route>
           <Route path="/signin" element={<SigninPage />} />
+          <Route path="/novel/viewer/:id" element={<NovelViewerPage />} />
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/error" element={<ErrorPage />} />
             <Route path="*" element={<ErrorPage msg="존재하지 않는 페이지입니다." />} />
