@@ -66,7 +66,11 @@ const viewerToolBoxStyle = css`
  * ViewToolBox 컴포넌트 내에서 사용하기 위한 기능 버튼 컴포넌트입니다.
  */
 export function ViewerTool(props: ViewerToolProps) {
-  return <div css={viewerToolStyle}>{props.children}</div>;
+  return (
+    <div css={viewerToolStyle} onClick={props.onClick}>
+      {props.children}
+    </div>
+  );
 }
 
 interface ViewerToolProps {

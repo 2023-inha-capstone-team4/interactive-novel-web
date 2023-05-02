@@ -7,10 +7,16 @@ import { MasterManagerContext } from '../../libs/renderer/lib/MasterManagerConte
 import { MasterManager } from '../../libs/renderer/lib/MasterManager';
 import MasterCanvas from '../../libs/renderer/component/MasterCanvas';
 import { useEffect, useState } from 'react';
+import { SwipeableDrawer } from '@mui/material';
+import Reviews from './Reviews';
 
 function NovelViewerPage() {
   const { id } = useParams();
   const [masterManager, setMasterManager] = useState(null);
+  const [reviewDrawerOpen, setReviewDrawerOpen] = useState(false);
+
+  const openReviewDrawer = () => setReviewDrawerOpen(true);
+  const closeReviewDrawer = () => setReviewDrawerOpen(false);
 
   const setupMasterManager = () => {
     setMasterManager(new MasterManager());
@@ -23,7 +29,7 @@ function NovelViewerPage() {
   }, []);
 
   if (!masterManager) {
-    return <>로딩 중...</>;
+    return <></>;
   }
 
   return (
@@ -33,10 +39,18 @@ function NovelViewerPage() {
           <MasterCanvas />
         </MasterManagerContext.Provider>
       </div>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={reviewDrawerOpen}
+        onOpen={openReviewDrawer}
+        onClose={closeReviewDrawer}
+      >
+        <Reviews />
+      </SwipeableDrawer>
       <div className="viewtoolbox-container">
         <ViewerToolBox>
           <ViewerTool>좋아요</ViewerTool>
-          <ViewerTool>리뷰 (999)</ViewerTool>
+          <ViewerTool onClick={openReviewDrawer}>리뷰 (999)</ViewerTool>
           <ViewerTool>맨 위로</ViewerTool>
           <ViewerTool>그만 볼래요</ViewerTool>
         </ViewerToolBox>
@@ -59,6 +73,13 @@ const style = css`
       width: 100%;
     }
   }
+
+  .reviewmodal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
   .viewtoolbox-container {
     position: fixed;
     top: 15px;

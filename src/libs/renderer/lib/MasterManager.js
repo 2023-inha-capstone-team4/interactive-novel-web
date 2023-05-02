@@ -13,7 +13,6 @@ import { AudioSound } from './AudioSound.js';
 
 export class MasterManager {
   constructor() {
-    console.log('constructor()!');
     //create timer
     this.masterTimer = new MasterTimer();
     this.sceneTimer = new SceneTimer();
