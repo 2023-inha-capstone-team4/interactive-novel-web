@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
 import { Box, Button } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { Link } from 'react-router-dom';
 
 function PlayButton(props: PlayButtonProps) {
   return (
-    <Box position="relative" onClick={() => {}}>
-      <Thumbnail src={props.thumbnail} alt="thumbnail" />
-      <PlayIcon />
-    </Box>
+    <Link to={`/novel/viewer/${props.novelId}`}>
+      <Box position="relative">
+        <Thumbnail src={props.thumbnail} alt="thumbnail" />
+        <PlayIcon />
+      </Box>
+    </Link>
   );
 }
 

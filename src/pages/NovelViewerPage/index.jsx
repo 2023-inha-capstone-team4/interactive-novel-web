@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ViewerTool, ViewerToolBox } from './ViewerToolBox';
 import { MasterManagerContext } from '../../libs/renderer/lib/MasterManagerContext';
 import { MasterManager } from '../../libs/renderer/lib/MasterManager';
@@ -14,6 +14,8 @@ import styled from '@emotion/styled';
 function NovelViewerPage() {
   const { id: idParam } = useParams();
   const id = parseInt(idParam);
+
+  const navigate = useNavigate();
 
   const [masterManager, setMasterManager] = useState(null);
   const [reviewDrawerOpen, setReviewDrawerOpen] = useState(false);
@@ -63,7 +65,7 @@ function NovelViewerPage() {
           <ViewerTool>좋아요</ViewerTool>
           <ViewerTool onClick={openReviewDrawer}>리뷰 (999)</ViewerTool>
           <ViewerTool>맨 위로</ViewerTool>
-          <ViewerTool>그만 볼래요</ViewerTool>
+          <ViewerTool onClick={() => navigate(-1)}>그만 볼래요</ViewerTool>
         </ViewerToolBox>
       </div>
     </div>
