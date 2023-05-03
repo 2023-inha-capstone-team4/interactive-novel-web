@@ -7,8 +7,9 @@ import { MasterManagerContext } from '../../libs/renderer/lib/MasterManagerConte
 import { MasterManager } from '../../libs/renderer/lib/MasterManager';
 import MasterCanvas from '../../libs/renderer/component/MasterCanvas';
 import { useEffect, useState } from 'react';
-import { SwipeableDrawer } from '@mui/material';
+import { CircularProgress, SwipeableDrawer } from '@mui/material';
 import Reviews from './Reviews';
+import styled from '@emotion/styled';
 
 function NovelViewerPage() {
   const { id: idParam } = useParams();
@@ -26,12 +27,20 @@ function NovelViewerPage() {
 
   useEffect(() => {
     // 1. 노벨 데이터 로드
+
     // 2. MasterManager 세팅
-    setupMasterManager();
+    // 실 API 연동 전, 로딩 화면을 노출하기 위해 임의로 시간 지연
+    setTimeout(() => setupMasterManager(), 1500);
   }, []);
 
+  // 로딩 뷰
   if (!masterManager) {
-    return <></>;
+    return (
+      <LoadingScreen>
+        <CircularProgress />
+        <p>작품을 불러오고 있어요</p>
+      </LoadingScreen>
+    );
   }
 
   return (
@@ -68,8 +77,14 @@ const style = css`
 
   .canvas-container {
     width: 100%;
+    height: 100%;
     max-width: 700px;
     margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     & canvas {
       width: 100%;
@@ -86,6 +101,23 @@ const style = css`
     position: fixed;
     top: 15px;
     right: 10px;
+  }
+`;
+
+const LoadingScreen = styled.div`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #0f0f0f;
+  color: #fff;
+
+  & > p {
+    margin: 20px 0;
   }
 `;
 
