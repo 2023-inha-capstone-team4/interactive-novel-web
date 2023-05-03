@@ -11,7 +11,9 @@ import { SwipeableDrawer } from '@mui/material';
 import Reviews from './Reviews';
 
 function NovelViewerPage() {
-  const { id } = useParams();
+  const { id: idParam } = useParams();
+  const id = parseInt(idParam);
+
   const [masterManager, setMasterManager] = useState(null);
   const [reviewDrawerOpen, setReviewDrawerOpen] = useState(false);
 
@@ -45,7 +47,7 @@ function NovelViewerPage() {
         onOpen={openReviewDrawer}
         onClose={closeReviewDrawer}
       >
-        <Reviews />
+        <Reviews novelId={id} />
       </SwipeableDrawer>
       <div className="viewtoolbox-container">
         <ViewerToolBox>
