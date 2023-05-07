@@ -24,7 +24,7 @@ const Background = styled.div`
 
 const Content = styled.div`
   height: 100vh;
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
   background-color: #ffffff;
   overflow-y: scroll;
@@ -44,7 +44,7 @@ const Content = styled.div`
   }
 
   /* 좁은 화면에서 스크롤 바 숨기기 */
-  @media (max-width: 700px) {
+  @media (max-width: 600px) {
     -ms-overflow-style: none; /* IE */
     scrollbar-width: none; /* Firefox */
     /* Chrome */
