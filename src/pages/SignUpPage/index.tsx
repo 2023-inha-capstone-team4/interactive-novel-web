@@ -14,11 +14,14 @@ import {
 import { ChangeEvent, Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 import { validateEmailFormat } from '../../utils/validation';
 import AuthAPI from '../../api/AuthAPI';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 회원가입 영역입니다.
  */
 export default function SignUpPage() {
+  const navigate = useNavigate();
+
   // 상태: 회원가입 입력 폼
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -94,8 +97,6 @@ export default function SignUpPage() {
       })
       .catch((error) => {
         // 회원가입 실패에 대한 메시지를 표시합니다.
-        setModalDisplayed(true);
-        return;
         showAlertMsg('회원가입에 실패했습니다.');
       });
   };
@@ -164,7 +165,7 @@ export default function SignUpPage() {
       <Dialog open={modalDisplayed} onClose={handleModalClose}>
         <DialogContent>회원가입에 성공했습니다.</DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => {}}>
+          <Button autoFocus onClick={() => navigate('/sign/in')}>
             로그인으로 이동
           </Button>
         </DialogActions>
