@@ -19,7 +19,7 @@ function Header() {
   };
 
   const handleAccountButtonClick = () => {
-    navigate('/signin');
+    navigate('/sign/in');
   };
 
   return (
