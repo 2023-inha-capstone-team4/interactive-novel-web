@@ -11,11 +11,14 @@ import { ChangeEvent, SyntheticEvent, useState, Dispatch, SetStateAction } from 
 import AuthAPI from '../../api/AuthAPI';
 import { AuthToken } from '../../types/Auth';
 import { validateEmailFormat } from '../../utils/validation';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 로그인 영역입니다.
  */
 export default function SignInPage() {
+  const navigate = useNavigate();
+
   // 상태: 로그인 폼 데이터
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -70,17 +73,13 @@ export default function SignInPage() {
 
     // 로그인 API를 호출합니다.
     AuthAPI.signIn({ email, password })
-      .then((resp) => {
-        const PREFIX = '로그인에 성공하였습니다.';
-
-        // 응답 바디 안에 포함된 JSON 문자열을 통해 AuthToken 객체를 생성합니다.
-        const body = resp.data;
-        const tokenRawStr = body.replace(PREFIX, '');
-        const authToken: AuthToken = JSON.parse(tokenRawStr);
-
+      .then((authToken: AuthToken) => {
         // 토큰을 로컬 스토리지에 저장합니다.
         localStorage.setItem('access-token', authToken.accessToken);
         localStorage.setItem('refresh-token', authToken.refreshToken);
+
+        // 메인 화면으로 이동합니다.
+        navigate('/');
       })
       .catch((error) => {
         // 로그인 실패에 대한 메시지를 표시합니다.
