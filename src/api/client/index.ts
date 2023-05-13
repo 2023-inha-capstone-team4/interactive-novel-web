@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import dateDeserializationInterceptor from './DateDeserializationInterceptor';
+import dateDeserializationInterceptor from './dateDeserializationInterceptor';
 import expiredTokenInterceptor from './expiredTokenInterceptor';
 
 /**
