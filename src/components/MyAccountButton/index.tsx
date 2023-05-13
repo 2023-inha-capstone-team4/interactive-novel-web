@@ -30,7 +30,9 @@ export default function MyAccountButton() {
 
   // 내 계정 정보를 불러옵니다.
   useEffect(() => {
-    UserAPI.findMyInfo().then((resp) => setInfo(resp.data));
+    UserAPI.findMyInfo()
+      .then((resp) => setInfo(resp.data))
+      .catch(() => {});
   });
 
   return (
