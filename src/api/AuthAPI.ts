@@ -1,3 +1,4 @@
+import { findAccessToken } from '../services/auth-service';
 import { AuthToken } from '../types/Auth';
 import Client from './client';
 
@@ -23,7 +24,7 @@ const AuthAPI = {
       const handleResponse = () => {
         const { status, response } = request;
 
-        if (status >= 400 && status <= 500) {
+        if (status >= 400) {
           reject('로그인 에러');
           return;
         }
@@ -42,6 +43,20 @@ const AuthAPI = {
 
       request.send(JSON.stringify(signInRequest));
     });
+  },
+
+  refresh: () => {
+    const refreshToken = localStorage.getItem('refresh-token');
+
+    return Client.post<AuthToken>(
+      '/refresh',
+      { refreshToken },
+      {
+        headers: {
+          Authorization: `Bearer ${findAccessToken()}`,
+        },
+      },
+    );
   },
 };
 
