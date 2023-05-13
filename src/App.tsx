@@ -19,6 +19,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import MyPage from './pages/MyPage';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -44,6 +45,7 @@ function App() {
             <Route path="/novel/:id" element={<NovelDetailPage />} />
             <Route path="/publisher/:id" element={<PublisherPage />} />
             <Route path="/bookmark" element={<BookmarkPage />} />
+            <Route path="/my" element={<MyPage />} />
           </Route>
           <Route path="/sign" element={<AuthPageLayout />}>
             <Route path="/sign/in" element={<SignInPage />} />

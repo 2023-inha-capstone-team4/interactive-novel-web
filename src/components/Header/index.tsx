@@ -2,24 +2,19 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Collapse, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import PersonIcon from '@mui/icons-material/Person';
 import SearchBar from './SearchBar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
+import MyAccountButton from '../MyAccountButton';
 
 /**
  * 페이지의 Header 요소입니다.
  */
 function Header() {
   const [searchBarDisplayed, displaySearchBar] = useState(false);
-  const navigate = useNavigate();
 
   const toggleSearchBar = () => {
     displaySearchBar(!searchBarDisplayed);
-  };
-
-  const handleAccountButtonClick = () => {
-    navigate('/sign/in');
   };
 
   return (
@@ -29,9 +24,7 @@ function Header() {
           <span>LOGO</span>
         </Link>
         <span>
-          <IconButton onClick={handleAccountButtonClick}>
-            <PersonIcon />
-          </IconButton>
+          <MyAccountButton />
           <IconButton onClick={toggleSearchBar}>
             <SearchIcon />
           </IconButton>
