@@ -12,6 +12,7 @@ import AuthAPI from '../../api/AuthAPI';
 import { AuthToken } from '../../types/Auth';
 import { validateEmailFormat } from '../../utils/validation';
 import { useNavigate } from 'react-router-dom';
+import { saveTokens, signIn } from '../../services/auth-service';
 
 /**
  * 로그인 영역입니다.
@@ -72,16 +73,11 @@ export default function SignInPage() {
     if (!validateInputs()) return;
 
     // 로그인 API를 호출합니다.
-    AuthAPI.signIn({ email, password })
-      .then((authToken: AuthToken) => {
-        // 토큰을 로컬 스토리지에 저장합니다.
-        localStorage.setItem('access-token', authToken.accessToken);
-        localStorage.setItem('refresh-token', authToken.refreshToken);
-
-        // 메인 화면으로 이동합니다.
+    signIn(email, password)
+      .then(() => {
         navigate('/');
       })
-      .catch((error) => {
+      .catch(() => {
         // 로그인 실패에 대한 메시지를 표시합니다.
         showAlertMsg('로그인에 실패했습니다. 이메일과 비밀번호를 다시 확인해주세요.');
       });

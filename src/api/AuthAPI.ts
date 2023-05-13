@@ -1,4 +1,4 @@
-import { findAccessToken } from '../services/auth-service';
+import { findAccessToken, findRefreshToken } from '../services/auth-service';
 import { AuthToken } from '../types/Auth';
 import Client from './client';
 
@@ -45,15 +45,19 @@ const AuthAPI = {
     });
   },
 
+  /**
+   * 액세스 토큰 갱신 API입니다.
+   */
   refresh: () => {
-    const refreshToken = localStorage.getItem('refresh-token');
+    const accessToken = findAccessToken();
+    const refreshToken = findRefreshToken();
 
     return Client.post<AuthToken>(
       '/refresh',
       { refreshToken },
       {
         headers: {
-          Authorization: `Bearer ${findAccessToken()}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

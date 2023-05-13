@@ -1,8 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { APIError } from '../../types/Error';
 import AuthAPI from '../AuthAPI';
-import { getRefreshedToken } from '../../services/auth-service';
+import { refreshTokens } from '../../services/auth-service';
 import Client from '.';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 날짜를 표현하는 문자열을 Date로 변환합니다.
@@ -34,13 +35,20 @@ export const dateDeserializingInterceptor = (response: AxiosResponse) => {
 export const invalidAccessTokenInterceptor = (error: AxiosError<any>) => {
   const apiError: APIError = error.response!.data;
 
-  // Token refresh
+  // Refresh!
   // https://github.com/axios/axios/issues/934#issuecomment-322003342
   if (apiError.errorCode === 'INVALID_ACCESS_TOKEN') {
-    getRefreshedToken().then((token) => {
-      error.config!.headers.Authorization = token;
-      return Client.request(error.config!);
-    });
+    return refreshTokens()
+      .then(({ accessToken }) => {
+        const config = error.config!;
+        config.headers.Authorization = `Bearer ${accessToken}`;
+        return Client.request(config);
+      })
+      .catch(() => {
+        // 다시 로그인 필요
+        const navigate = useNavigate();
+        navigate('/sign/in');
+      });
   }
 
   return Promise.reject(error);
