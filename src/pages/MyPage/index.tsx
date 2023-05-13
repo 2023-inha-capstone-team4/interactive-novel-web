@@ -50,7 +50,7 @@ const style = css`
     justify-content: flex-start;
     align-items: center;
 
-    padding: 80px 15px 50px 15px;
+    padding: 80px 15px 40px 15px;
 
     h2 {
       margin: 0;
@@ -66,6 +66,8 @@ const style = css`
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 1em;
+
+    font-size: 14px;
 
     tr {
       height: 36px;
