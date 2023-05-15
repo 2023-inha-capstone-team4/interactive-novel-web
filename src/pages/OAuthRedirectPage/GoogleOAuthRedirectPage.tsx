@@ -12,18 +12,23 @@ export default function GoogleOAuthRedirectPage() {
 
   // 백엔드 OAuth API 호출
   useEffect(() => {
-    if (!code) return;
+    const errorMsg = '로그인 중 에러가 발생했습니다.';
+
+    // Google OAuth API에서 에러를 반환한 경우
+    if (error) {
+      navigate(`/error?msg=${errorMsg} (${error})`);
+      return;
+    }
+
+    if (!code) {
+      navigate(`/error?msg=${errorMsg}`);
+      return;
+    }
+
     signInWithGoogleOAuth(code)
       .then(() => navigate('/'))
-      .catch(() => navigate('/error'));
+      .catch(() => navigate(`/error?msg=${errorMsg}`));
   }, [code]);
-
-  // Google OAuth API에서 에러를 반환한 경우
-  if (error || !code) {
-    const errorMsg = `에러가 발생했습니다. (${error})`;
-    navigate(`/error?msg=${errorMsg}`);
-    return <></>;
-  }
 
   return (
     <>
