@@ -1,17 +1,30 @@
 import styled from '@emotion/styled';
 import { Box, Divider, Stack } from '@mui/material';
 import PlainStyleLink from '../../components/PlainStyleLink';
+import qs from 'qs';
 
 const googleLogo = require('../../assets/img/google-logo.png');
 const naverLogo = require('../../assets/img/naver-logo.png');
 
+const GOOGLE_LOGIN_BASEURL = 'https://accounts.google.com/o/oauth2/v2/auth';
+
 function SocialLogin() {
+  const googleLoginParameters = {
+    client_id: process.env.REACT_APP_GOOGLE_API_ID,
+    redirect_uri: `${process.env.REACT_APP_BASEURL}oauth/google`,
+    response_type: 'code',
+    scope: 'https://www.googleapis.com/auth/userinfo.profile',
+  };
+
+  console.log(googleLoginParameters.redirect_uri);
+  const googleLoginUrl = GOOGLE_LOGIN_BASEURL + '?' + qs.stringify(googleLoginParameters);
+
   return (
     <>
       <Divider variant="middle" />
       <Title>다른 계정으로 로그인</Title>
       <Stack direction="row" justifyContent="center" spacing={2}>
-        <SocialLoginButton icon={googleLogo} title="Google" href="#" />
+        <SocialLoginButton icon={googleLogo} title="Google" href={googleLoginUrl} />
         <SocialLoginButton icon={naverLogo} title="네이버" href="#" />
       </Stack>
     </>

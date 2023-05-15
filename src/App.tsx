@@ -13,13 +13,14 @@ import NovelViewerPage from './pages/NovelViewerPage';
 import AuthPageLayout from './layouts/AuthPageLayout';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import MyPage from './pages/MyPage';
+import GoogleOAuthRedirectPage from './pages/OAuthRedirectPage/GoogleOAuthRedirectPage';
 
 // MUI를 위한 Roboto 폰트 로드
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import MyPage from './pages/MyPage';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -50,6 +51,9 @@ function App() {
           <Route path="/sign" element={<AuthPageLayout />}>
             <Route path="/sign/in" element={<SignInPage />} />
             <Route path="/sign/up" element={<SignUpPage />} />
+          </Route>
+          <Route path="/oauth">
+            <Route path="/oauth/google" element={<GoogleOAuthRedirectPage />} />
           </Route>
           <Route path="/novel/viewer/:id" element={<NovelViewerPage />} />
           <Route path="/" element={<DefaultLayout />}>

@@ -62,6 +62,13 @@ const AuthAPI = {
       },
     );
   },
+
+  /**
+   * OAuth 인증 API입니다.
+   */
+  signInWithGoogleOAuth: (code: string) => {
+    return Client.get<AuthToken>(`/sign/in/oauth2/google?code=${code}`);
+  },
 };
 
 /**

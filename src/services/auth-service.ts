@@ -56,3 +56,19 @@ export async function refreshTokens(): Promise<AuthToken> {
       .catch(reject);
   });
 }
+
+/**
+ * Google OAuth에서 받은 `code`를 통해
+ * 인증 토큰을 가져와 로컬 스토리지에 저장합니다.
+ */
+export async function signInWithGoogleOAuth(code: string): Promise<AuthToken> {
+  return new Promise((resolve, reject) => {
+    AuthAPI.signInWithGoogleOAuth(code)
+      .then((resp) => {
+        const authToken = resp.data;
+        saveTokens(authToken.accessToken, authToken.refreshToken);
+        resolve(authToken);
+      })
+      .catch(reject);
+  });
+}
