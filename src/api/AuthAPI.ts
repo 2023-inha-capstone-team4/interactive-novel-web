@@ -73,8 +73,8 @@ const AuthAPI = {
   /**
    * 네이버 OAuth 인증 API입니다.
    */
-  signInWithNaverOAuth: (code: string) => {
-    return Client.get<AuthToken>(`/sign/in/oauth2/naver?code=${code}`);
+  signInWithNaverOAuth: (code: string, state: string) => {
+    return Client.get<AuthToken>(`/sign/in/oauth2/naver?code=${code}&state=${state}`);
   },
 };
 

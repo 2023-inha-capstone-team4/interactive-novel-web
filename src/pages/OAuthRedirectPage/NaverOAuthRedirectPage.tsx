@@ -30,12 +30,12 @@ export default function NaverOAuthRedirectPage() {
     // 돌아온 state 값이 저장해둔 state와 다른 경우
     const savedState = localStorage.getItem('naver-oauth-state');
     localStorage.removeItem('naver-oauth-state');
-    if (state != savedState) {
+    if (!state || state != savedState) {
       navigate(`/error?msg=${errorMsg}`);
       return;
     }
 
-    signInWithNaverOAuth(code)
+    signInWithNaverOAuth(code, state)
       .then(() => navigate('/'))
       .catch(() => navigate(`/error?msg=${errorMsg}`));
   }, [code]);
