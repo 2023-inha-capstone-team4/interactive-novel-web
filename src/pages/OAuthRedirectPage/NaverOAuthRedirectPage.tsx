@@ -12,6 +12,9 @@ export default function NaverOAuthRedirectPage() {
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
 
+  console.log(code);
+  console.log(state);
+
   // 백엔드 OAuth API 호출
   useEffect(() => {
     const errorMsg = '로그인 중 에러가 발생했습니다.';
