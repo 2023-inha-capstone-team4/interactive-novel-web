@@ -64,10 +64,17 @@ const AuthAPI = {
   },
 
   /**
-   * OAuth 인증 API입니다.
+   * Google OAuth 인증 API입니다.
    */
   signInWithGoogleOAuth: (code: string) => {
     return Client.get<AuthToken>(`/sign/in/oauth2/google?code=${code}`);
+  },
+
+  /**
+   * 네이버 OAuth 인증 API입니다.
+   */
+  signInWithNaverOAuth: (code: string) => {
+    return Client.get<AuthToken>(`/sign/in/oauth2/naver?code=${code}`);
   },
 };
 

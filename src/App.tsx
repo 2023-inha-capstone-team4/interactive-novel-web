@@ -21,6 +21,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import NaverOAuthRedirectPage from './pages/OAuthRedirectPage/NaverOAuthRedirectPage';
 
 // MUI Theme
 const muiTheme = createTheme({
@@ -54,6 +55,7 @@ function App() {
           </Route>
           <Route path="/oauth">
             <Route path="/oauth/google" element={<GoogleOAuthRedirectPage />} />
+            <Route path="/oauth/naver" element={<NaverOAuthRedirectPage />} />
           </Route>
           <Route path="/novel/viewer/:id" element={<NovelViewerPage />} />
           <Route path="/" element={<DefaultLayout />}>
