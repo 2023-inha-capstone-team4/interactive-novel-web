@@ -8,6 +8,7 @@ export default function NaverOAuthRedirectPage() {
   const [searchParams] = useSearchParams();
 
   const code = searchParams.get('code');
+  const state = searchParams.get('state');
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
 
@@ -22,6 +23,14 @@ export default function NaverOAuthRedirectPage() {
     }
 
     if (!code) {
+      navigate(`/error?msg=${errorMsg}`);
+      return;
+    }
+
+    // 돌아온 state 값이 저장해둔 state와 다른 경우
+    const savedState = localStorage.getItem('naver-oauth-state');
+    localStorage.removeItem('naver-oauth-state');
+    if (state != savedState) {
       navigate(`/error?msg=${errorMsg}`);
       return;
     }

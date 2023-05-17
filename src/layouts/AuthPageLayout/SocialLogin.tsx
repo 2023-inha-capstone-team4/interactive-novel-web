@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { Box, Divider, Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 import PlainStyleLink from '../../components/PlainStyleLink';
 import qs from 'qs';
+import { v4 as uuidv4 } from 'uuid';
 
 const googleLogo = require('../../assets/img/google-logo.png');
 const naverLogo = require('../../assets/img/naver-logo.png');
@@ -10,6 +11,7 @@ const GOOGLE_LOGIN_BASEURL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const NAVER_LOGIN_BASEURL = 'https://nid.naver.com/oauth2.0/authorize';
 
 function SocialLogin() {
+  // Google
   const googleLoginParameters = {
     client_id: process.env.REACT_APP_GOOGLE_API_ID,
     redirect_uri: `${process.env.REACT_APP_BASEURL}oauth/google`,
@@ -19,11 +21,16 @@ function SocialLogin() {
 
   const googleLoginUrl = GOOGLE_LOGIN_BASEURL + '?' + qs.stringify(googleLoginParameters);
 
+  // NAVER
+  // State 값을 로컬 스토리지에 저장
+  const state = uuidv4();
+  localStorage.setItem('naver-oauth-state', state);
+
   const naverLoginParameters = {
     response_type: 'code',
     client_id: process.env.REACT_APP_NAVER_API_ID,
     redirect_uri: `${process.env.REACT_APP_BASEURL}oauth/naver`,
-    state: '12345',
+    state,
   };
 
   const naverLoginUrl = NAVER_LOGIN_BASEURL + '?' + qs.stringify(naverLoginParameters);
