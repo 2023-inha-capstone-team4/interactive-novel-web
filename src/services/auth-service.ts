@@ -55,7 +55,7 @@ export function signIn(email: string, password: string): Promise<AuthToken> {
  */
 export function signOut() {
   removeTokens();
-  window.location.reload();
+  window.location.pathname = '/';
 }
 
 /**
