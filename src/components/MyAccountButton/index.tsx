@@ -33,7 +33,7 @@ export default function MyAccountButton() {
     UserAPI.findMyInfo()
       .then((resp) => setInfo(resp.data))
       .catch(() => {});
-  });
+  }, []);
 
   return (
     <IconButton onClick={handleAccountButtonClick}>
