@@ -6,12 +6,11 @@ import { findAccessToken } from '../../services/auth-service';
 import { useEffect, useState } from 'react';
 import { User } from '../../types/User';
 import UserAPI from '../../api/UserAPI';
+import useUserInfo from '../../hooks/useUserInfo';
 
 export default function MyAccountButton() {
   const navigate = useNavigate();
-
-  // 상태: 내 정보
-  const [info, setInfo] = useState<User>();
+  const userInfo = useUserInfo();
 
   /**
    * 버튼 클릭에 대한 핸들러입니다.
@@ -20,7 +19,7 @@ export default function MyAccountButton() {
    * 그렇지 않은 경우에는 로그인 화면으로 이동시킵니다.
    */
   const handleAccountButtonClick = () => {
-    if (!info) {
+    if (!userInfo) {
       navigate('/sign/in');
       return;
     }
@@ -28,17 +27,10 @@ export default function MyAccountButton() {
     navigate('/my');
   };
 
-  // 내 계정 정보를 불러옵니다.
-  useEffect(() => {
-    UserAPI.findMyInfo()
-      .then((resp) => setInfo(resp.data))
-      .catch(() => {});
-  }, []);
-
   return (
     <IconButton onClick={handleAccountButtonClick}>
-      {info ? (
-        <Avatar src={info.imageUrl} alt="profile" sx={{ width: 24, height: 24 }} />
+      {userInfo ? (
+        <Avatar src={userInfo.imageUrl} alt="profile" sx={{ width: 24, height: 24 }} />
       ) : (
         <LoginIcon />
       )}

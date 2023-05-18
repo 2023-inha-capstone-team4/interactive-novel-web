@@ -1,40 +1,34 @@
 /** @jsxImportSource @emotion/react */
 
-import { useEffect, useState } from 'react';
-import { User } from '../../types/User';
-import UserAPI from '../../api/UserAPI';
 import { css } from '@emotion/react';
 import { Avatar } from '@mui/material';
+import useUserInfo from '../../hooks/useUserInfo';
 
 export default function MyPage() {
-  const [info, setInfo] = useState<User>();
+  const userInfo = useUserInfo();
 
-  useEffect(() => {
-    UserAPI.findMyInfo().then((resp) => setInfo(resp.data));
-  }, []);
-
-  if (!info) return <></>;
+  if (!userInfo) return <></>;
 
   return (
     <div css={style}>
       <div className="profile">
-        <Avatar src={info.imageUrl} alt="profile" sx={{ width: 56, height: 56 }} />
-        <h2>{info.username}</h2>
+        <Avatar src={userInfo.imageUrl} alt="profile" sx={{ width: 56, height: 56 }} />
+        <h2>{userInfo.username}</h2>
       </div>
       <div className="info">
         <h3>기본 정보</h3>
         <table className="info-table">
           <tr>
             <th>이메일</th>
-            <td>{info.email}</td>
+            <td>{userInfo.email}</td>
           </tr>
           <tr>
             <th>멤버십 구독</th>
-            <td>{info.isPaid}</td>
+            <td>{userInfo.isPaid}</td>
           </tr>
           <tr>
             <th>작가 등록</th>
-            <td>{info.author ? '등록 완료' : '등록 안됨'}</td>
+            <td>{userInfo.author ? '등록 완료' : '등록 안됨'}</td>
           </tr>
         </table>
       </div>

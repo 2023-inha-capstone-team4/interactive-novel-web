@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 import { signOut } from '../../services/auth-service';
+import useUserInfo from '../../hooks/useUserInfo';
 
 /**
  * 페이지의 Footer 요소입니다.
  */
 function Footer() {
+  const userInfo = useUserInfo();
+
   /** 로그아웃 버튼 클릭에 대한 핸들러 함수입니다. */
   const handleLogoutClick = () => {
     signOut();
@@ -15,9 +18,11 @@ function Footer() {
       <p>Interactive Novel</p>
       <div className="buttons">
         <a href="mailto:vivalavida@inha.edu">문의</a>
-        <p className="button" onClick={handleLogoutClick}>
-          로그아웃
-        </p>
+        {userInfo && (
+          <p className="button" onClick={handleLogoutClick}>
+            로그아웃
+          </p>
+        )}
       </div>
     </StyledFooter>
   );
