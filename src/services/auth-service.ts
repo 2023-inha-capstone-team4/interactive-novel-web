@@ -33,7 +33,8 @@ export function saveTokens(accessToken: string, refreshToken: string) {
 export function signIn(email: string, password: string): Promise<AuthToken> {
   return new Promise((resolve, reject) => {
     AuthAPI.signIn({ email, password })
-      .then((authToken) => {
+      .then((resp) => {
+        const authToken = resp.data;
         saveTokens(authToken.accessToken, authToken.refreshToken);
         resolve(authToken);
       })

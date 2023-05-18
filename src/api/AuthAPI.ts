@@ -19,30 +19,7 @@ const AuthAPI = {
    * 요청이 성공할 경우 토큰 객체를 반환합니다.
    */
   signIn: (signInRequest: SignInRequest) => {
-    return new Promise<AuthToken>((resolve, reject) => {
-      const request = new XMLHttpRequest();
-      const handleResponse = () => {
-        const { status, response } = request;
-
-        if (status >= 400) {
-          reject('로그인 에러');
-          return;
-        }
-
-        try {
-          return JSON.parse(response);
-        } catch {
-          reject('토큰 파싱 에러');
-        }
-      };
-
-      request.open('GET', `${process.env.REACT_APP_API_BASEURL}sign/in/reader`);
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.setRequestHeader('Accept', '*/*');
-      request.onload = handleResponse;
-
-      request.send(JSON.stringify(signInRequest));
-    });
+    return Client.post<AuthToken>('/sign/in/reader', signInRequest);
   },
 
   /**
