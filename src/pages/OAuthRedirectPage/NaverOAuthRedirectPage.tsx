@@ -42,11 +42,7 @@ export default function NaverOAuthRedirectPage() {
 
   return (
     <>
-      {/* <CircularProgress /> */}
-      <p>code : {code}</p>
-      <p>state : {state}</p>
-      <p>error : {error}</p>
-      <p>error_description : {errorDescription}</p>
+      <CircularProgress />
     </>
   );
 }

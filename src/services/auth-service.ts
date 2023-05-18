@@ -94,15 +94,32 @@ export async function signInWithGoogleOAuth(code: string): Promise<AuthToken> {
  * 네이버 OAuth에서 받은 `code`를 통해
  * 인증 토큰을 가져와 로컬 스토리지에 저장합니다.
  */
-export async function signInWithNaverOAuth(code: string, state: string): Promise<AuthToken> {
+export async function signInWithNaverOAuth(code: string, state: string) {
   return new Promise((resolve, reject) => {
     AuthAPI.signInWithNaverOAuth(code, state)
       .then((resp) => {
-        const authToken = resp.data;
-        console.log(resp.headers);
-        saveTokens(authToken.accessToken, authToken.refreshToken);
-        resolve(authToken);
+        const authorization = resp.headers['authorization'];
+        const xRefreshToken = resp.headers['x-refresh-token'];
+
+        if (!authorization || !xRefreshToken) {
+          reject();
+          return;
+        }
+
+        const accessToken = removeBearerPrefix(authorization);
+        const refreshToken = removeBearerPrefix(xRefreshToken);
+
+        saveTokens(accessToken, refreshToken);
+        resolve(accessToken);
       })
       .catch(reject);
   });
+}
+
+function removeBearerPrefix(str: string) {
+  if (str.startsWith('Bearer')) {
+    return str.replace('Bearer', '').trimStart();
+  }
+
+  return str;
 }
