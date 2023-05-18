@@ -28,6 +28,14 @@ export function saveTokens(accessToken: string, refreshToken: string) {
 }
 
 /**
+ * 로컬 스토리지에 저장된 액세스 토큰과 리프레시 토큰을 삭제합니다.
+ */
+export function removeTokens() {
+  localStorage.removeItem('access-token');
+  localStorage.removeItem('refresh-token');
+}
+
+/**
  * 주어진 인증 정보로 로그인합니다.
  */
 export function signIn(email: string, password: string): Promise<AuthToken> {
@@ -40,6 +48,14 @@ export function signIn(email: string, password: string): Promise<AuthToken> {
       })
       .catch(reject);
   });
+}
+
+/**
+ * 로그아웃합니다.
+ */
+export function signOut() {
+  removeTokens();
+  window.location.reload();
 }
 
 /**
