@@ -12,36 +12,33 @@ export default function NaverOAuthRedirectPage() {
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
 
-  console.log(code);
-  console.log(state);
-
   // 백엔드 OAuth API 호출
-  // useEffect(() => {
-  //   const errorMsg = '로그인 중 에러가 발생했습니다.';
+  useEffect(() => {
+    const errorMsg = '로그인 중 에러가 발생했습니다.';
 
-  //   // 네이버 OAuth API에서 에러를 반환한 경우
-  //   if (error) {
-  //     navigate(`/error?msg=${errorMsg} (${errorDescription})`);
-  //     return;
-  //   }
+    // 네이버 OAuth API에서 에러를 반환한 경우
+    if (error) {
+      navigate(`/error?msg=${errorMsg} (${errorDescription})`);
+      return;
+    }
 
-  //   if (!code) {
-  //     navigate(`/error?msg=${errorMsg}`);
-  //     return;
-  //   }
+    if (!code) {
+      navigate(`/error?msg=${errorMsg}`);
+      return;
+    }
 
-  //   // 돌아온 state 값이 저장해둔 state와 다른 경우
-  //   const savedState = localStorage.getItem('naver-oauth-state');
-  //   localStorage.removeItem('naver-oauth-state');
-  //   if (!state || state != savedState) {
-  //     navigate(`/error?msg=${errorMsg}`);
-  //     return;
-  //   }
+    // 돌아온 state 값이 저장해둔 state와 다른 경우
+    const savedState = localStorage.getItem('naver-oauth-state');
+    localStorage.removeItem('naver-oauth-state');
+    if (!state || state != savedState) {
+      navigate(`/error?msg=${errorMsg}`);
+      return;
+    }
 
-  //   signInWithNaverOAuth(code, state)
-  //     .then(() => navigate('/'))
-  //     .catch(() => navigate(`/error?msg=${errorMsg}`));
-  // }, [code]);
+    signInWithNaverOAuth(code, state)
+      .then(() => navigate('/'))
+      .catch(() => navigate(`/error?msg=${errorMsg}`));
+  }, [code]);
 
   return (
     <>

@@ -83,6 +83,7 @@ export async function signInWithNaverOAuth(code: string, state: string): Promise
     AuthAPI.signInWithNaverOAuth(code, state)
       .then((resp) => {
         const authToken = resp.data;
+        console.log(resp.headers);
         saveTokens(authToken.accessToken, authToken.refreshToken);
         resolve(authToken);
       })
