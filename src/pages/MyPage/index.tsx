@@ -1,11 +1,22 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { Avatar } from '@mui/material';
+import { Avatar, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import useUserInfo from '../../hooks/useUserInfo';
+import { useState } from 'react';
+import UserAPI from '../../api/UserAPI';
 
 export default function MyPage() {
   const userInfo = useUserInfo();
+
+  const [dialogDisplayed, setDialogDisplayed] = useState(false);
+
+  const handleAuthorRegistration = () => {
+    UserAPI.registerAuthor().then(() => {
+      // Dialog 닫기
+      setDialogDisplayed(false);
+    });
+  };
 
   if (!userInfo) return <></>;
 
@@ -28,10 +39,30 @@ export default function MyPage() {
           </tr>
           <tr>
             <th>작가 등록</th>
-            <td>{userInfo.author ? '등록 완료' : '등록 안됨'}</td>
+            <td>
+              {userInfo.author ? (
+                <>
+                  등록 안됨 <Button onClick={() => setDialogDisplayed(true)}>등록하기</Button>
+                </>
+              ) : (
+                <>
+                  등록 안됨 <Button onClick={() => setDialogDisplayed(true)}>등록하기</Button>
+                </>
+              )}
+            </td>
           </tr>
         </table>
       </div>
+      <Dialog open={dialogDisplayed} onClose={() => setDialogDisplayed(false)}>
+        <DialogContent>
+          작가 등록시 작품 제작을 위한 전용 에디터를 이용할 수 있으며, 만든 작품을 업로드하여 공유할
+          수 있습니다.
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAuthorRegistration}>작가 등록하기</Button>
+          <Button onClick={() => setDialogDisplayed(false)}>취소</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

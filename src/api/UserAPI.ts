@@ -21,6 +21,17 @@ const UserAPI = {
       },
     });
   },
+
+  /**
+   * 작가 등록 API입니다.
+   */
+  registerAuthor: () => {
+    return Client.post<string>('/reader/getAuthor', null, {
+      headers: {
+        Authorization: `Bearer ${findAccessToken()}`,
+      },
+    });
+  },
 };
 
 export default UserAPI;
