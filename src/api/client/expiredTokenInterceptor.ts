@@ -3,6 +3,8 @@ import { APIError } from '../../types/Error';
 import { refreshTokens } from '../../services/auth-service';
 import Client from '.';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AlertAPIContext } from '../../utils/alert';
 
 /**
  * 액세스 토큰이 만료되어 발생한 에러에 대해

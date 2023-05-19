@@ -3,19 +3,26 @@
 import { css } from '@emotion/react';
 import { Avatar, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import useUserInfo from '../../hooks/useUserInfo';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import UserAPI from '../../api/UserAPI';
+import { AlertAPIContext } from '../../utils/alert';
 
 export default function MyPage() {
   const userInfo = useUserInfo();
 
   const [dialogDisplayed, setDialogDisplayed] = useState(false);
 
+  const showAlert = useContext(AlertAPIContext);
+
   const handleAuthorRegistration = () => {
-    UserAPI.registerAuthor().then(() => {
-      // Dialog 닫기
-      setDialogDisplayed(false);
-    });
+    UserAPI.registerAuthor()
+      .then(() => {
+        // Dialog 닫기
+        setDialogDisplayed(false);
+      })
+      .catch((error) => {
+        showAlert(error.response.data.errorMessage);
+      });
   };
 
   if (!userInfo) return <></>;

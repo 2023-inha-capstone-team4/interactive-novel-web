@@ -7,32 +7,22 @@ import {
   Snackbar,
   Stack,
 } from '@mui/material';
-import { ChangeEvent, SyntheticEvent, useState, Dispatch, SetStateAction } from 'react';
-import AuthAPI from '../../api/AuthAPI';
-import { AuthToken } from '../../types/Auth';
+import { ChangeEvent, SyntheticEvent, useState, Dispatch, SetStateAction, useContext } from 'react';
 import { validateEmailFormat } from '../../utils/validation';
 import { useNavigate } from 'react-router-dom';
-import { saveTokens, signIn } from '../../services/auth-service';
+import { signIn } from '../../services/auth-service';
+import { AlertAPIContext } from '../../utils/alert';
 
 /**
  * 로그인 영역입니다.
  */
 export default function SignInPage() {
   const navigate = useNavigate();
+  const showAlert = useContext(AlertAPIContext);
 
   // 상태: 로그인 폼 데이터
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // 상태: 로그인 에러 메시지의 표시 상태
-  const [alertDisplayed, setAlertDisplayed] = useState(false);
-  const [alertMsg, setAlertMsg] = useState('');
-
-  /** 주어진 에러 메시지를 표시합니다. */
-  const showAlertMsg = (msg: string) => {
-    setAlertMsg(msg);
-    setAlertDisplayed(true);
-  };
 
   /** input 요소의 변경 이벤트를 처리하는 핸들러 함수를 반환합니다. */
   const inputChangeHandler = (setValue: Dispatch<SetStateAction<any>>) => {
@@ -48,19 +38,19 @@ export default function SignInPage() {
   const validateInputs = (): boolean => {
     // 메일란이 비어 있는 경우
     if (!email) {
-      showAlertMsg('이메일을 입력해주세요.');
+      showAlert('이메일을 입력해주세요.');
       return false;
     }
 
     // 이메일 입력 형식이 올바르지 않은 경우
     if (!validateEmailFormat(email)) {
-      showAlertMsg('이메일 형식이 올바르지 않습니다.');
+      showAlert('이메일 형식이 올바르지 않습니다.');
       return false;
     }
 
     // 비밀번호란이 비어있는 경우
     if (!password) {
-      showAlertMsg('비밀번호를 입력해주세요.');
+      showAlert('비밀번호를 입력해주세요.');
       return false;
     }
 
@@ -79,19 +69,8 @@ export default function SignInPage() {
       })
       .catch(() => {
         // 로그인 실패에 대한 메시지를 표시합니다.
-        showAlertMsg('로그인에 실패했습니다. 이메일과 비밀번호를 다시 확인해주세요.');
+        showAlert('로그인에 실패했습니다. 이메일과 비밀번호를 다시 확인해주세요.');
       });
-  };
-
-  /** 로그인 실패 메시지를 닫기 위한 핸들러 함수입니다. */
-  const handleAlertClose = (event: SyntheticEvent | Event, reason: string) => {
-    // 화면의 다른 영역을 클릭하는 이벤트에 대해서는 실패 메시지를 닫지 않습니다.
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setAlertDisplayed(false);
-    setAlertMsg('');
   };
 
   return (
@@ -125,9 +104,6 @@ export default function SignInPage() {
           로그인
         </Button>
       </Stack>
-      <Snackbar open={alertDisplayed} autoHideDuration={5000} onClose={handleAlertClose}>
-        <Alert severity="error">{alertMsg}</Alert>
-      </Snackbar>
     </>
   );
 }

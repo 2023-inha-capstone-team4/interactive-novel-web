@@ -11,34 +11,26 @@ import {
   Snackbar,
   Stack,
 } from '@mui/material';
-import { ChangeEvent, Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react';
 import { validateEmailFormat } from '../../utils/validation';
 import AuthAPI from '../../api/AuthAPI';
 import { useNavigate } from 'react-router-dom';
+import { AlertAPIContext } from '../../utils/alert';
 
 /**
  * 회원가입 영역입니다.
  */
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const showAlert = useContext(AlertAPIContext);
 
   // 상태: 회원가입 입력 폼
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // 상태: 회원가입 에러 메시지의 표시 상태
-  const [alertDisplayed, setAlertDisplayed] = useState(false);
-  const [alertMsg, setAlertMsg] = useState('');
-
   // 상태: 회원가입 성공 모달 표시 상태
   const [modalDisplayed, setModalDisplayed] = useState(false);
-
-  /** 주어진 에러 메시지를 표시합니다. */
-  const showAlertMsg = (msg: string) => {
-    setAlertMsg(msg);
-    setAlertDisplayed(true);
-  };
 
   /** 회원가입 성공 모달을 닫습니다. */
   const handleModalClose = () => {
@@ -59,25 +51,25 @@ export default function SignUpPage() {
   const validateInputs = (): boolean => {
     // 이름란이 비어있는 경우
     if (!username) {
-      showAlertMsg('이름을 입력해주세요.');
+      showAlert('이름을 입력해주세요.');
       return false;
     }
 
     // 메일란이 비어 있는 경우
     if (!email) {
-      showAlertMsg('이메일을 입력해주세요.');
+      showAlert('이메일을 입력해주세요.');
       return false;
     }
 
     // 이메일 입력 형식이 올바르지 않은 경우
     if (!validateEmailFormat(email)) {
-      showAlertMsg('이메일 형식이 올바르지 않습니다.');
+      showAlert('이메일 형식이 올바르지 않습니다.');
       return false;
     }
 
     // 비밀번호란이 비어있는 경우
     if (!password) {
-      showAlertMsg('비밀번호를 입력해주세요.');
+      showAlert('비밀번호를 입력해주세요.');
       return false;
     }
 
@@ -97,19 +89,8 @@ export default function SignUpPage() {
       })
       .catch((error) => {
         // 회원가입 실패에 대한 메시지를 표시합니다.
-        showAlertMsg('회원가입에 실패했습니다.');
+        showAlert('회원가입에 실패했습니다.');
       });
-  };
-
-  /** 회원가입 실패 메시지를 닫기 위한 핸들러 함수입니다. */
-  const handleAlertClose = (event: SyntheticEvent | Event, reason: string) => {
-    // 화면의 다른 영역을 클릭하는 이벤트에 대해서는 실패 메시지를 닫지 않습니다.
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setAlertDisplayed(false);
-    setAlertMsg('');
   };
 
   return (
@@ -159,9 +140,6 @@ export default function SignUpPage() {
           회원가입
         </Button>
       </Stack>
-      <Snackbar open={alertDisplayed} autoHideDuration={5000} onClose={handleAlertClose}>
-        <Alert severity="error">{alertMsg}</Alert>
-      </Snackbar>
       <Dialog open={modalDisplayed} onClose={handleModalClose}>
         <DialogContent>회원가입에 성공했습니다.</DialogContent>
         <DialogActions>
