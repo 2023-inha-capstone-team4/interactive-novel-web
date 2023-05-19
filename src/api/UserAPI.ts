@@ -32,6 +32,21 @@ const UserAPI = {
       },
     });
   },
+
+  /**
+   * 프로필 이미지 변경 API입니다.
+   */
+  updateProfileImage: (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return Client.post('/reader/modifyProfileImg', formData, {
+      headers: {
+        Authorization: `Bearer ${findAccessToken()}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 };
 
 export default UserAPI;

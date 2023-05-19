@@ -3,9 +3,11 @@
 import { css } from '@emotion/react';
 import { Avatar, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import useUserInfo from '../../hooks/useUserInfo';
-import { useContext, useState } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 import UserAPI from '../../api/UserAPI';
 import { AlertAPIContext } from '../../utils/alert';
+import EditIcon from '@mui/icons-material/Edit';
+import styled from '@emotion/styled';
 
 export default function MyPage() {
   const userInfo = useUserInfo();
@@ -13,6 +15,8 @@ export default function MyPage() {
   const [dialogDisplayed, setDialogDisplayed] = useState(false);
 
   const showAlert = useContext(AlertAPIContext);
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleAuthorRegistration = () => {
     UserAPI.registerAuthor()
@@ -25,12 +29,54 @@ export default function MyPage() {
       });
   };
 
+  /** 프로필 이미지를 변경하는 핸들러 함수입니다. */
+  const handleInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (!files) {
+      showAlert('프로필 이미지 변경 중 문제가 발생했습니다. 1');
+      return;
+    }
+
+    const file = files.item(0);
+    if (!file) {
+      showAlert('프로필 이미지 변경 중 문제가 발생했습니다. 2');
+      return;
+    }
+
+    UserAPI.updateProfileImage(file).then(() => {
+      window.location.reload();
+    });
+  };
+
+  /** 프로필 변경 클릭 핸들러입니다. */
+  const handleProfileClick = () => {
+    inputFileRef.current?.click();
+  };
+
   if (!userInfo) return <></>;
 
   return (
     <div css={style}>
       <div className="profile">
-        <Avatar src={userInfo.imageUrl} alt="profile" sx={{ width: 56, height: 56 }} />
+        <div className="profile-img-container">
+          <Avatar
+            className="profile-img"
+            src={userInfo.imageUrl}
+            alt="profile"
+            sx={{ width: 56, height: 56 }}
+            onClick={handleProfileClick}
+          />
+          <StyledEditIcon />
+          <input
+            className="profile-img-input"
+            type="file"
+            name="file"
+            accept="image/*"
+            onChange={handleInputFileChange}
+            ref={inputFileRef}
+          />
+        </div>
         <h2>{userInfo.username}</h2>
       </div>
       <div className="info">
@@ -90,6 +136,22 @@ const style = css`
     }
   }
 
+  .profile-img-container {
+    position: relative;
+
+    &:hover {
+      filter: brightness(50%);
+    }
+
+    .profile-img {
+      cursor: pointer;
+    }
+
+    .profile-img-input {
+      display: none;
+    }
+  }
+
   .info {
     padding: 0 15px;
   }
@@ -118,4 +180,15 @@ const style = css`
       text-align: left;
     }
   }
+`;
+
+const StyledEditIcon = styled(EditIcon)`
+  position: absolute;
+  top: 35px;
+  right: 0px;
+
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 50%;
+  font-size: 14px;
 `;
