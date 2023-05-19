@@ -59,13 +59,12 @@ export default function MyPage() {
   return (
     <div css={style}>
       <div className="profile">
-        <div className="profile-img-container">
+        <div className="profile-img-container" onClick={handleProfileClick}>
           <Avatar
             className="profile-img"
             src={userInfo.imageUrl}
             alt="profile"
             sx={{ width: 56, height: 56 }}
-            onClick={handleProfileClick}
           />
           <StyledEditIcon />
           <input
@@ -138,13 +137,10 @@ const style = css`
 
   .profile-img-container {
     position: relative;
+    cursor: pointer;
 
     &:hover {
       filter: brightness(50%);
-    }
-
-    .profile-img {
-      cursor: pointer;
     }
 
     .profile-img-input {
