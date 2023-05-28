@@ -21,7 +21,7 @@ function Header() {
     <>
       <StyledHeader>
         <Link to="/" style={{ textDecoration: 'none', color: '#000000' }}>
-          <span>LOGO</span>
+          <span className="logo">Interactive Novels</span>
         </Link>
         <span>
           <MyAccountButton />
@@ -49,6 +49,10 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  .logo {
+    font-weight: 800;
+  }
 `;
 
 export default Header;

@@ -15,7 +15,7 @@ function Footer() {
 
   return (
     <StyledFooter>
-      <p>Interactive Novel</p>
+      <p>Interactive Novels</p>
       <div className="buttons">
         <a href="mailto:vivalavida@inha.edu">문의</a>
         {userInfo && (
