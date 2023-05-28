@@ -34,6 +34,13 @@ export default function Reviews(props: ReviewsProps) {
       });
   };
 
+  const changeSortOption = (option: string) => {
+    setSortOption(option);
+
+    setComments([]);
+    loadMoreComments();
+  };
+
   useEffect(() => {
     loadMoreComments();
   }, []);
@@ -47,13 +54,13 @@ export default function Reviews(props: ReviewsProps) {
           <ul className="reviews-sort-options">
             <li
               className={`${sortOption !== 'popular' && 'unselected'}`}
-              onClick={() => setSortOption('popular')}
+              onClick={() => changeSortOption('popular')}
             >
               추천순
             </li>
             <li
               className={`${sortOption !== 'new' && 'unselected'}`}
-              onClick={() => setSortOption('new')}
+              onClick={() => changeSortOption('new')}
             >
               최신순
             </li>
