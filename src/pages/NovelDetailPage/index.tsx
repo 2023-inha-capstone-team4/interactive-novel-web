@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Novel } from '../../types/Novel';
 import NovelAPI from '../../api/NovelAPI';
 import Section from '../../components/Section';
@@ -17,22 +17,13 @@ const TheBoatThumbnail = require('../../assets/img/the-boat.gif');
 
 function NovelDetailPage() {
   const { id } = useParams();
-  const [novel, setNovel] = useState<Novel>();
+  const { state: novel } = useLocation();
+
   const [bookmarked, setBookmarked] = useState(false);
 
   const toggleBookmark = () => {
     setBookmarked(!bookmarked);
   };
-
-  useEffect(() => {
-    if (!id) return;
-    const idInt = parseInt(id);
-    if (isNaN(idInt)) return;
-
-    NovelAPI.findOne(idInt).then((resp) => {
-      setNovel(resp.data);
-    });
-  }, []);
 
   // 로딩 뷰
   if (!novel) {

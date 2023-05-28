@@ -5,7 +5,7 @@ import { dateToString } from '../../utils/date';
 
 function FullWidthNovelCard(props: FullWidthNovelCardProps) {
   return (
-    <StyledCard to={props.href}>
+    <StyledCard to={props.href} state={props.novel}>
       <Thumbnail src={props.novel.novelImageUrl} alt="thumbnail" />
       <div>
         <Title>{props.novel.novelName}</Title>

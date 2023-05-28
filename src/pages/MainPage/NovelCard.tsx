@@ -4,7 +4,7 @@ import { Novel } from '../../types/Novel';
 
 function NovelCard(props: NovelCardProps) {
   return (
-    <PlainStyleLink to={props.href}>
+    <PlainStyleLink to={props.href} state={props.novel}>
       <Thumbnail src={props.novel.novelImageUrl} alt="thumbnail" />
       <TitleRow>
         <h3>{props.novel.novelName}</h3>
