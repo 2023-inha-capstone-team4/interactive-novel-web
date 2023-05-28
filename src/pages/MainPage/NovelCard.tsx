@@ -29,6 +29,7 @@ const Thumbnail = styled.img`
   width: 200px;
   height: 125px;
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const TitleRow = styled.div`

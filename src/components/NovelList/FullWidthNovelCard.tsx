@@ -40,6 +40,7 @@ const Thumbnail = styled.img`
   height: 130px;
   margin-right: 15px;
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const Title = styled.div`
