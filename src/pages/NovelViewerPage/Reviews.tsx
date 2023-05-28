@@ -2,7 +2,16 @@
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Box, Button, CircularProgress } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { Comment } from '../../types/Novel';
 import Client from '../../api/client';
@@ -14,9 +23,33 @@ export default function Reviews(props: ReviewsProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [sortOption, setSortOption] = useState('popular'); // new | popular
 
-  const [isLoading, setIsLoading] = useState(false);
-  const PAGE_SIZE = 15;
+  const [isLoading, setIsLoading] = useState(false); // 댓글이 로드 중인지
+  const PAGE_SIZE = 15; // 한 번에 로드하는 댓글 개수
 
+  // 댓글 작성 모달
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [inputComment, setInputComment] = useState('');
+
+  const openCommentDialog = () => {
+    setInputComment('');
+    setDialogOpen(true);
+  };
+
+  const handleSubmitComment = () => {
+    NovelAPI.createComment(props.episodeId, inputComment)
+      .then(() => {
+        reloadComments(); // 댓글 새로고침
+        setDialogOpen(false);
+      })
+      .catch((e) => {
+        showAlert(e.response.data.errorMessage);
+        setDialogOpen(false);
+      });
+  };
+
+  /**
+   * 댓글을 `PAGE_SIZE`만큼 더 로드합니다.
+   */
   const loadMoreComments = () => {
     setIsLoading(true);
 
@@ -34,11 +67,20 @@ export default function Reviews(props: ReviewsProps) {
       });
   };
 
-  const changeSortOption = (option: string) => {
-    setSortOption(option);
-
+  /**
+   * 댓글을 처음부터 다시 로드합니다.
+   */
+  const reloadComments = () => {
     setComments([]);
     loadMoreComments();
+  };
+
+  /**
+   * 정렬 기준을 변경하고, 댓글을 다시 로드합니다.
+   */
+  const changeSortOption = (option: string) => {
+    setSortOption(option);
+    reloadComments(); // 댓글 새로고침
   };
 
   useEffect(() => {
@@ -65,7 +107,9 @@ export default function Reviews(props: ReviewsProps) {
               최신순
             </li>
           </ul>
-          <div className="reviews-write-button">리뷰 작성</div>
+          <Button onClick={openCommentDialog} sx={{ color: 'white' }}>
+            댓글 작성
+          </Button>
         </div>
       </div>
       <div className="reviews-body">
@@ -90,6 +134,24 @@ export default function Reviews(props: ReviewsProps) {
           {isLoading ? <CircularProgress /> : <Button onClick={loadMoreComments}>더 보기</Button>}
         </Box>
       </div>
+      <Dialog open={dialogOpen} fullWidth onClose={() => setDialogOpen(false)}>
+        <DialogTitle>댓글 작성</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            type="text"
+            value={inputComment}
+            onChange={(e) => setInputComment(e.target.value)}
+            rows={5}
+            multiline
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>취소</Button>
+          <Button onClick={handleSubmitComment}>작성</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
