@@ -6,16 +6,15 @@ import { dateToString } from '../../utils/date';
 function FullWidthNovelCard(props: FullWidthNovelCardProps) {
   return (
     <StyledCard to={props.href}>
-      <Thumbnail src="http://www.sbs.com.au/theboat/images/fb-image.jpg" alt="thumbnail" />
+      <Thumbnail src={props.novel.novelImageUrl} alt="thumbnail" />
       <div>
-        <Title>{props.novel.name}</Title>
+        <Title>{props.novel.novelName}</Title>
         <PublisherRow>
-          <Link to={`/publisher/${props.novel.publisher.id}`} className="publisher">
-            {props.novel.publisher.name}
+          <Link to={`/publisher/${props.novel.authorId}`} className="publisher">
+            {props.novel.authorName}
           </Link>
-          <p className="date">{dateToString(props.novel.publishedDate)}</p>
         </PublisherRow>
-        <Description>Based on the story by Nam Le, Adaptation by Matt Huynh</Description>
+        <Description>{props.novel.novelIntroduce}</Description>
       </div>
     </StyledCard>
   );

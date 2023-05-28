@@ -16,6 +16,20 @@ const NovelAPI = {
   findReviews: (id: number) => {
     return Client.get<Review[]>(`/api-dummy/novel/reviews`);
   },
+
+  /**
+   * 신규 작품 조회 API입니다.
+   */
+  newNovels: () => {
+    return Client.get<Novel[]>('/novel/list/new');
+  },
+
+  /**
+   * 인기 작품 조회 API입니다.
+   */
+  hotNovels: () => {
+    return Client.get<Novel[]>('/novel/list/popular');
+  },
 };
 
 export default NovelAPI;

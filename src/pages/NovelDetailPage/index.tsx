@@ -46,25 +46,22 @@ function NovelDetailPage() {
   return (
     <div css={style}>
       <div className="thumbnail">
-        <img src={TheBoatThumbnail} alt="thumbnail" />
+        <img src={novel.novelImageUrl} alt="thumbnail" />
       </div>
-      <Section title={novel.name}>
+      <Section title={novel.novelName}>
         <Box sx={{ position: 'absolute', top: 0, right: 15 }}>
           <BookmarkToggleButton value={bookmarked} onClick={toggleBookmark} />
         </Box>
         <Stack direction="row" marginX="15px">
-          <Link className="author" to={`/publisher/${novel.publisher.id}`}>
-            {novel.publisher.name}
+          <Link className="author" to={`/publisher/${novel.authorId}`}>
+            {novel.authorName}
           </Link>
-          <p className="published-date">{dateToString(novel.publishedDate)}</p>
           <p className="rate-score">
-            평점 <b>{4.5}</b>
+            평점 <b>{novel.totalScore}</b>
           </p>
         </Stack>
         <Box paddingX="15px">
-          <p className="description">
-            {'Based on the story by Nam Le, Adaptation by Matt Huynh, Produced by SBS.'}
-          </p>
+          <p className="description">{novel.novelIntroduce}</p>
         </Box>
         <Box paddingX="15px" paddingY="10px">
           <h3>에피소드 (4)</h3>

@@ -1,12 +1,14 @@
 import { Novel } from '../../types/Novel';
 import HorizontalSlider from '../../components/HorizontalSlider';
 import Section from '../../components/Section';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import NovelCard from './NovelCard';
 import { Tab, Tabs } from '@mui/material';
 import TabPanel from '../../components/TabPanel';
 import NovelList from '../../components/NovelList';
 import { useLocation } from 'react-router-dom';
+import NovelAPI from '../../api/NovelAPI';
+import { AlertAPIContext } from '../../utils/alert';
 
 /**
  * 메인 페이지 요소입니다.
@@ -34,51 +36,17 @@ function MainPage() {
 }
 
 /**
- * 임시 노벨 데이터이며, 실제 데이터를 대신해 사용합니다.
- */
-const dummyNovelList = [
-  {
-    id: 1,
-    publisher: { id: 1, name: 'SBS' },
-    name: 'The Boat',
-    totalScore: 4.5,
-    publishedDate: new Date(),
-  },
-  {
-    id: 1,
-    publisher: { id: 1, name: 'SBS' },
-    name: 'The Boat',
-    totalScore: 4.5,
-    publishedDate: new Date(),
-  },
-  {
-    id: 1,
-    publisher: { id: 1, name: 'SBS' },
-    name: 'The Boat',
-    totalScore: 4.5,
-    publishedDate: new Date(),
-  },
-  {
-    id: 1,
-    publisher: { id: 1, name: 'SBS' },
-    name: 'The Boat',
-    totalScore: 4.5,
-    publishedDate: new Date(),
-  },
-  {
-    id: 1,
-    publisher: { id: 1, name: 'SBS' },
-    name: 'The Boat',
-    totalScore: 4.5,
-    publishedDate: new Date(),
-  },
-];
-
-/**
  * 메인 페이지의 신규 작품 섹션입니다.
  */
 function NewNovelsSection() {
-  const [novels, setNovels] = useState(dummyNovelList);
+  const showAlert = useContext(AlertAPIContext);
+  const [novels, setNovels] = useState<Novel[]>([]);
+
+  useEffect(() => {
+    NovelAPI.newNovels()
+      .then((resp) => setNovels(resp.data))
+      .catch((e) => showAlert(e.response.data.errorMessage));
+  }, []);
 
   return (
     <Section id="new" title="따끈따끈한 신규 작품">
@@ -95,7 +63,14 @@ function NewNovelsSection() {
  * 메인 페이지의 인기 작품 섹션입니다.
  */
 function HotNovelsSection() {
-  const [novels, setNovels] = useState(dummyNovelList);
+  const showAlert = useContext(AlertAPIContext);
+  const [novels, setNovels] = useState<Novel[]>([]);
+
+  useEffect(() => {
+    NovelAPI.hotNovels()
+      .then((resp) => setNovels(resp.data))
+      .catch((e) => showAlert(e.response.data.errorMessage));
+  }, []);
 
   return (
     <Section id="hot" title="인기 작품">
@@ -151,7 +126,7 @@ const categories = [
  * 노벨 리스트 요소입니다.
  */
 function NovelListForCategory(props: NovelListForCategoryProps) {
-  return <NovelList novels={dummyNovelList} />;
+  return <NovelList novels={[]} />;
 }
 
 interface NovelListForCategoryProps {

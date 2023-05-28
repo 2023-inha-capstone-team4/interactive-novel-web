@@ -5,12 +5,12 @@ import { Novel } from '../../types/Novel';
 function NovelCard(props: NovelCardProps) {
   return (
     <PlainStyleLink to={props.href}>
-      <Thumbnail src="http://www.sbs.com.au/theboat/images/fb-image.jpg" alt="thumbnail" />
+      <Thumbnail src={props.novel.novelImageUrl} alt="thumbnail" />
       <TitleRow>
-        <h3>{props.novel.name}</h3>
-        <Link to={`/publisher/${props.novel.publisher.id}`}>{props.novel.publisher.name}</Link>
+        <h3>{props.novel.novelName}</h3>
+        <Link to={`/publisher/${props.novel.authorId}`}>{props.novel.authorName}</Link>
       </TitleRow>
-      <Description>Based on the story by Nam Le, Adaptation by Matt Huynh</Description>
+      <Description>{props.novel.novelIntroduce}</Description>
     </PlainStyleLink>
   );
 }

@@ -1,11 +1,10 @@
-import { Publisher } from './Publisher';
-
-interface Novel {
+export interface Novel {
   id: number;
-  publisher: Publisher;
-  name: string;
+  novelName: string;
+  authorId: number;
+  authorName: string;
+  novelIntroduce: string;
+  novelImageUrl: string;
+  publisherType: string;
   totalScore: number;
-  publishedDate: Date;
 }
-
-export type { Novel };
