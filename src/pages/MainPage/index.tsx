@@ -52,7 +52,7 @@ function NewNovelsSection() {
     <Section id="new" title="따끈따끈한 신규 작품">
       <HorizontalSlider>
         {novels.map((novel: Novel) => (
-          <NovelCard novel={novel} href={`/novel/${novel.id}`} />
+          <NovelCard novel={novel} key={novel.id} href={`/novel/${novel.id}`} />
         ))}
       </HorizontalSlider>
     </Section>
@@ -76,7 +76,7 @@ function HotNovelsSection() {
     <Section id="hot" title="인기 작품">
       <HorizontalSlider>
         {novels.map((novel: Novel) => (
-          <NovelCard novel={novel} href={`/novel/${novel.id}`} />
+          <NovelCard novel={novel} key={novel.id} href={`/novel/${novel.id}`} />
         ))}
       </HorizontalSlider>
     </Section>

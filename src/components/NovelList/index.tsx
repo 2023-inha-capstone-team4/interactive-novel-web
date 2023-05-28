@@ -6,7 +6,7 @@ function NovelList(props: NovelListProps) {
   return (
     <StyledList>
       {props.novels.map((novel: Novel) => (
-        <li>
+        <li key={novel.id}>
           <FullWidthNovelCard novel={novel} href={`/novel/${novel.id}`} />
         </li>
       ))}
