@@ -8,3 +8,11 @@ export interface Novel {
   publisherType: string;
   totalScore: number;
 }
+
+export interface Comment {
+  id: number;
+  readerId: number;
+  readerName: string;
+  comment: string;
+  recommendAmount: number;
+}

@@ -24,6 +24,7 @@ function NovelViewerPage() {
 
   const loadScenes = () => {
     // Scene API 호출
+    setScenes([]);
   };
 
   useEffect(() => {
@@ -51,7 +52,7 @@ function NovelViewerPage() {
         onOpen={openReviewDrawer}
         onClose={closeReviewDrawer}
       >
-        <Reviews novelId={id} />
+        <Reviews episodeId={id} />
       </SwipeableDrawer>
       <div className="viewtoolbox-container">
         <ViewerToolBox>

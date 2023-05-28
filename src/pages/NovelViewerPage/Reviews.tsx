@@ -2,36 +2,58 @@
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Box, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Box, Button, CircularProgress } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
+import { Comment } from '../../types/Novel';
+import Client from '../../api/client';
 import NovelAPI from '../../api/NovelAPI';
-import { Review } from '../../types/Review';
-import { dateToString } from '../../utils/date';
+import { AlertAPIContext } from '../../utils/alert';
 
 export default function Reviews(props: ReviewsProps) {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [sortOption, setSortOption] = useState('likes');
+  const showAlert = useContext(AlertAPIContext);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [sortOption, setSortOption] = useState('popular'); // new | popular
+
+  const [isLoading, setIsLoading] = useState(false);
+  const PAGE_SIZE = 15;
+
+  const loadMoreComments = () => {
+    setIsLoading(true);
+
+    const startIdx = comments.length;
+    const endIdx = startIdx + PAGE_SIZE - 1;
+
+    NovelAPI.comments(props.episodeId, startIdx, endIdx, sortOption)
+      .then(({ data }) => {
+        setComments([...comments, ...data]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        showAlert(e.response.data.errorMessage);
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
-    NovelAPI.findReviews(props.novelId).then((resp) => setReviews(resp.data));
+    loadMoreComments();
   }, []);
 
   return (
     <div css={style}>
       <div className="reviews-header">
         <Puller />
-        <h2>리뷰 ({reviews.length})</h2>
+        <h2>댓글 ({comments.length})</h2>
         <div className="flex-row">
           <ul className="reviews-sort-options">
             <li
-              className={`${sortOption !== 'likes' && 'unselected'}`}
-              onClick={() => setSortOption('likes')}
+              className={`${sortOption !== 'popular' && 'unselected'}`}
+              onClick={() => setSortOption('popular')}
             >
               추천순
             </li>
             <li
-              className={`${sortOption !== 'recent' && 'unselected'}`}
-              onClick={() => setSortOption('recent')}
+              className={`${sortOption !== 'new' && 'unselected'}`}
+              onClick={() => setSortOption('new')}
             >
               최신순
             </li>
@@ -41,30 +63,32 @@ export default function Reviews(props: ReviewsProps) {
       </div>
       <div className="reviews-body">
         <ul className="reviews-list">
-          {reviews.map((review) => (
-            <li className="reviews-list-item">
+          {comments.map((comment) => (
+            <li className="reviews-list-item" key={comment.id}>
               <div className="flex-row">
                 <div>
                   <p>
-                    <b>{review.readerName}</b>
+                    <b>{comment.readerName}</b>
                   </p>
-                  <p>{dateToString(review.created)}</p>
                 </div>
                 <Button size="small" variant="outlined">
-                  {review.likes} 추천
+                  {comment.recommendAmount} 추천
                 </Button>
               </div>
-              <p className="reviews-list-item-comment">{review.comment}</p>
+              <p className="reviews-list-item-comment">{comment.comment}</p>
             </li>
           ))}
         </ul>
+        <Box paddingY={2} textAlign="center">
+          {isLoading ? <CircularProgress /> : <Button onClick={loadMoreComments}>더 보기</Button>}
+        </Box>
       </div>
     </div>
   );
 }
 
 interface ReviewsProps {
-  novelId: number;
+  episodeId: number;
 }
 
 const style = css`
