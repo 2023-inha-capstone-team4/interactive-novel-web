@@ -83,6 +83,28 @@ export default function Reviews(props: ReviewsProps) {
     reloadComments(); // 댓글 새로고침
   };
 
+  /**
+   * 댓글을 추천합니다.
+   */
+  const upvoteComment = (commentId: number) => {
+    NovelAPI.upvoteComment(commentId)
+      .then(() => {
+        // 댓글 카운트 증가
+        // 새로고침 없이 상태 값 수정
+        const updatedComments = [...comments].map((comment) => {
+          if (comment.id === commentId) {
+            comment.recommendAmount++;
+            return comment;
+          }
+
+          return comment;
+        });
+
+        setComments(updatedComments);
+      })
+      .catch((e) => showAlert(e.response.data.errorMessage));
+  };
+
   useEffect(() => {
     loadMoreComments();
   }, []);
@@ -122,7 +144,7 @@ export default function Reviews(props: ReviewsProps) {
                     <b>{comment.readerName}</b>
                   </p>
                 </div>
-                <Button size="small" variant="outlined">
+                <Button size="small" variant="outlined" onClick={() => upvoteComment(comment.id)}>
                   {comment.recommendAmount} 추천
                 </Button>
               </div>
