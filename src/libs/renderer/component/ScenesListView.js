@@ -15,132 +15,138 @@ import binIconSrc from '../resources/images/buttons/bin_icon.png';
 
 import Modal from './Modal';
 import LayerEditor from './LayerEditor';
+import SoundListView from './SoundListView';
 
-function ScenesListView() {
-  let [sceneList, setSceneList] = useState([]);
-  const masterManager = useContext(MasterManagerContext);
 
-  const [selectedSceneIndex, setSelectedSceneIndex] = useState(
-    masterManager.sceneManager.curSceneIdx,
-  );
+function ScenesListView()
+{
 
-  const [isOpenChangeNameModal, setOpenChangeNameModal] = useState(false);
+    let [sceneList, setSceneList] = useState([]);
+    const masterManager=useContext(MasterManagerContext);
 
-  const [nameText, setNameText] = useState('');
+    const [selectedSceneIndex, setSelectedSceneIndex] =useState(masterManager.sceneManager.curSceneIdx);
+    
+    const [isOpenChangeNameModal, setOpenChangeNameModal] = useState(false);
 
-  function selectScene(index) {
-    if (masterManager.sceneManager.curSceneIdx === index) return;
+    const [nameText, setNameText] = useState("");
 
-    masterManager.sceneManager.curSceneIdx = index;
-    setSelectedSceneIndex(masterManager.sceneManager.curSceneIdx);
-    setSceneList([...masterManager.sceneManager.sceneList]);
 
-    masterManager.stop();
-  }
+    function selectScene(index)
+    {
+        if(masterManager.sceneManager.curSceneIdx===index) return;
 
-  function createNewScene() {
-    masterManager.sceneManager.createNewScene();
-    setSelectedSceneIndex(masterManager.sceneManager.curSceneIdx);
-    setSceneList([...masterManager.sceneManager.sceneList]);
 
-    masterManager.stop();
-  }
+        masterManager.sceneManager.curSceneIdx=index;
+        setSelectedSceneIndex(masterManager.sceneManager.curSceneIdx);
+        setSceneList([...masterManager.sceneManager.sceneList]);
 
-  function openChangeSceneNameModal() {
-    setOpenChangeNameModal(true);
-    setNameText(masterManager.sceneManager.getCurrentScene().name);
-  }
-
-  function changeSceneNameTextfield(event) {
-    if (event.target.value.length <= 15) {
-      setNameText(event.target.value);
+        masterManager.stop();
     }
-  }
 
-  function changeSceneName() {
-    let currentScene = masterManager.sceneManager.getCurrentScene();
 
-    if (currentScene == null) return;
+    function createNewScene()
+    {
+        masterManager.sceneManager.createNewScene();
+        setSelectedSceneIndex(masterManager.sceneManager.curSceneIdx);
+        setSceneList([...masterManager.sceneManager.sceneList]);
 
-    currentScene.name = nameText;
-  }
+        masterManager.stop();
+    }
 
-  function closeChangeSceneNameModal() {
-    setOpenChangeNameModal(false);
-  }
+    function openChangeSceneNameModal()
+    {
+        setOpenChangeNameModal(true);
+        setNameText(masterManager.sceneManager.getCurrentScene().name);
+    }
 
-  function copyCurrentScene() {}
+    function changeSceneNameTextfield(event)
+    {
+        if(event.target.value.length<=15)
+        {
+            setNameText(event.target.value);
+        }
+    }
 
-  function deleteCurrentScene() {
-    masterManager.sceneManager.removeSelectedScene();
-    selectScene(masterManager.sceneManager.curSceneIdx);
-  }
+    function changeSceneName()
+    {
+       let currentScene= masterManager.sceneManager.getCurrentScene();
+       
+       if(currentScene==null) return;
 
-  useEffect(() => {
-    setSceneList([...masterManager.sceneManager.sceneList]);
-  }, [masterManager.sceneManager.sceneList, selectedSceneIndex]);
+       currentScene.name=nameText;
+    }
 
-  return (
-    <>
-      <section className={styles.scene_view}>
-        <div>
-          <div className={styles.list_title}>Scenes</div>
-          <div className={styles.scenes}>
-            {sceneList.map((sceneItem, index, array) => {
-              return (
-                <SceneItem
-                  key={index}
-                  scene={sceneItem}
-                  index={index}
-                  isSelected={selectedSceneIndex === index}
-                  onClick={() => {
-                    selectScene(index);
-                  }}
-                ></SceneItem>
-              );
-            })}
-          </div>
-        </div>
+    function closeChangeSceneNameModal()
+    {
+        setOpenChangeNameModal(false);
+    }
 
-        <MenuBar>
-          <MenuItem imageSrc={plusIconSrc} onClick={createNewScene}></MenuItem>
-          <MenuItem imageSrc={abcIconSrc} onClick={openChangeSceneNameModal}></MenuItem>
-          <MenuItem imageSrc={copyIconSrc} onClick={copyCurrentScene}></MenuItem>
-          <MenuItem imageSrc={binIconSrc} onClick={deleteCurrentScene}></MenuItem>
-        </MenuBar>
-      </section>
-      <LayerEditor currentSceneIndex={selectedSceneIndex} />
+    function copyCurrentScene()
+    {}
 
-      {
-        //change name modal
-        isOpenChangeNameModal ? (
-          <Modal>
-            <div>최대 15글자까지 가능합니다</div>
-            <div>현재의 Scene이름 : {masterManager.sceneManager.getCurrentScene().name}</div>
-            <textarea
-              className={styles.name_text_area}
-              value={nameText}
-              onChange={(e) => {
-                changeSceneNameTextfield(e);
-              }}
-            ></textarea>
-            <div className={styles.modal_btn_box}>
-              <button
-                onClick={() => {
-                  changeSceneName();
-                  closeChangeSceneNameModal();
-                  setNameText('');
-                }}
-              >
-                변경하기
-              </button>
-              <button onClick={closeChangeSceneNameModal}>취소</button>
+    function deleteCurrentScene()
+    {
+        masterManager.sceneManager.removeSelectedScene();
+        selectScene(masterManager.sceneManager.curSceneIdx);
+    }
+
+    useEffect(() => {
+        setSceneList([...masterManager.sceneManager.sceneList]);
+    
+    }, [masterManager.sceneManager.sceneList,selectedSceneIndex]);
+    
+
+
+    return (<>
+        <section className={styles.scene_view}>
+            <div>
+            <div className={styles.list_title}>Scenes</div>
+            <div className={styles.scenes}>
+            {
+                sceneList.map((sceneItem, index, array)=>{
+
+                    return <SceneItem key={index} scene={sceneItem} index={index} isSelected={(selectedSceneIndex===index)} onClick={()=>{selectScene(index)}}></SceneItem>
+                })
+            }
             </div>
-          </Modal>
-        ) : null
-      }
-    </>
-  );
+            </div>
+
+            <MenuBar>
+                <MenuItem imageSrc={plusIconSrc} onClick={createNewScene}></MenuItem>
+                <MenuItem imageSrc={abcIconSrc} onClick={openChangeSceneNameModal}></MenuItem>
+                <MenuItem imageSrc={copyIconSrc} onClick={copyCurrentScene}></MenuItem>
+                <MenuItem imageSrc={binIconSrc} onClick={deleteCurrentScene}></MenuItem>
+            </MenuBar>
+        </section>
+        <LayerEditor currentSceneIndex={selectedSceneIndex}/>
+        <SoundListView currentSceneIndex={selectedSceneIndex} soundList={masterManager.sceneManager.getCurrentScene().soundList}/>
+        
+        {
+            //change name modal
+            isOpenChangeNameModal? 
+            <Modal>
+                <div>최대 15글자까지 가능합니다</div>
+                <div>현재의 Scene이름 : {masterManager.sceneManager.getCurrentScene().name}</div>
+                <textarea className={styles.name_text_area} value={nameText} onChange={(e)=>{
+                    changeSceneNameTextfield(e);
+                }}></textarea>
+                <div className={styles.modal_btn_box}>
+                    <button onClick={()=>{
+                        
+                        changeSceneName();
+                        closeChangeSceneNameModal();
+                        setNameText("");
+                        }}>변경하기</button>
+                    <button onClick={closeChangeSceneNameModal}>취소</button>
+                </div>
+            </Modal>
+            
+            :null
+        }
+            
+            
+            </>);
 }
+
 
 export default ScenesListView;

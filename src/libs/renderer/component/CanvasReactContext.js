@@ -1,3 +1,5 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-export const SceneManagerContext = createContext();
+export const SceneManagerContext=createContext();
+
+

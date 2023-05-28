@@ -1,37 +1,42 @@
+
+
 export class SoundEvent {
-  constructor(soundFilePath, startTime, repeatTimeInterval, repeatCount) {
-    this.soundPath = soundFilePath;
-    this.sound = new Audio(soundFilePath);
-    this.startTime = startTime;
-    this.repeatTimeInterval = repeatTimeInterval;
-    this.repeatCount = repeatCount;
-    this.isLoaded = false;
-    this.isPlaying = false;
+    constructor(timeLabel, soundPath, duration = null) {
+      this.name="new sound";
+      this.timeLabel = timeLabel;
+      this.soundPath = soundPath;
+      this.duration = duration;
+      this.audio=new Audio(soundPath);
+      this.isPlaying=false;
+    }
 
-    this.sound.addEventListener('canplaythrough', function () {
-      this.isLoaded = true;
-      console.log('audio file completely loaded!');
-      //this.sound.play();
-      console.log(this.isLoaded);
-      console.log(this.sound);
-    });
-  }
 
-  play() {
-    this.sound.play();
-    this.isPlaying = true;
-  }
+    play()
+    {
+      this.isPlaying=true;
+      this.audio.play();
+    }
 
-  pause() {
-    this.sound.pause();
-    this.isPlaying = false;
+    pause() {
+      this.audio.pause();
+      this.isPlaying = false;
+    }
+    
+    resume() {
+      this.audio.play().catch(error => {
+        // handle error
+        console.error("Error playing audio:", error);
+      });
+      this.isPlaying = true;
+    }
+    
+    stop() {
+      this.audio.pause();
+      this.audio.currentTime = 0; // reset to start
+      this.isPlaying = false;
+    }
+    
+    reset() {
+      this.audio.currentTime = 0; // reset to start
+    }
   }
-
-  setVolume(volume) {
-    this.sound.volume = volume;
-  }
-
-  setCurrentTime(time) {
-    this.sound.currentTime = time;
-  }
-}

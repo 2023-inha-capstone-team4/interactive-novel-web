@@ -3,13 +3,12 @@
 import { css } from '@emotion/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ViewerTool, ViewerToolBox } from './ViewerToolBox';
-import { MasterManagerContext } from '../../libs/renderer/lib/MasterManagerContext';
-import { MasterManager } from '../../libs/renderer/lib/MasterManager';
-import MasterCanvas from '../../libs/renderer/component/MasterCanvas';
 import { useEffect, useState } from 'react';
 import { CircularProgress, SwipeableDrawer } from '@mui/material';
 import Reviews from './Reviews';
 import styled from '@emotion/styled';
+import ClientScenesViewer from '../../libs/renderer/component/ClientScenesViewer';
+import { Scene } from '../../libs/renderer/lib/Scene';
 
 function NovelViewerPage() {
   const { id: idParam } = useParams();
@@ -17,26 +16,22 @@ function NovelViewerPage() {
 
   const navigate = useNavigate();
 
-  const [masterManager, setMasterManager] = useState(null);
+  const [scenes, setScenes] = useState(null);
   const [reviewDrawerOpen, setReviewDrawerOpen] = useState(false);
 
   const openReviewDrawer = () => setReviewDrawerOpen(true);
   const closeReviewDrawer = () => setReviewDrawerOpen(false);
 
-  const setupMasterManager = () => {
-    setMasterManager(new MasterManager());
+  const loadScenes = () => {
+    // Scene API 호출
   };
 
   useEffect(() => {
-    // 1. 노벨 데이터 로드
-
-    // 2. MasterManager 세팅
-    // 실 API 연동 전, 로딩 화면을 노출하기 위해 임의로 시간 지연
-    setTimeout(() => setupMasterManager(), 1500);
+    loadScenes();
   }, []);
 
   // 로딩 뷰
-  if (!masterManager) {
+  if (scenes === null) {
     return (
       <LoadingScreen>
         <CircularProgress />
@@ -48,9 +43,7 @@ function NovelViewerPage() {
   return (
     <div css={style}>
       <div className="canvas-container">
-        <MasterManagerContext.Provider value={masterManager}>
-          <MasterCanvas />
-        </MasterManagerContext.Provider>
+        <ClientScenesViewer scenes={scenes} />
       </div>
       <SwipeableDrawer
         anchor="bottom"

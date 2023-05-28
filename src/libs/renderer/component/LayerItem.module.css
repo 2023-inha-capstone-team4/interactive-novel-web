@@ -1,8 +1,26 @@
-.layer_item {
-  list-style: none;
+.layer_item
+{
+    list-style: none;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.layer_item:hover {
-  background-color: aliceblue;
-  cursor: pointer;
+.repeat_type
+{
+    border: 1px solid cornsilk;
+    padding: 4px;
+}
+
+.repeat_type:hover
+{
+    background-color: aquamarine;
+    padding: 4px;
+}
+
+.layer_item:hover
+{
+    background-color: aliceblue;
+    cursor:pointer;
 }

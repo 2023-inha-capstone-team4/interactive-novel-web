@@ -1,21 +1,29 @@
-export class SceneTimer {
-  constructor() {
-    this.currentPlayTime = 0;
-  }
 
-  updateTimer(deltaTime) {
-    this.currentPlayTime += deltaTime;
-  }
+export class SceneTimer
+{
+    constructor()
+    {
+        this.currentPlayTime=0;    
+    }
 
-  setPlayTime(targetTime) {
-    this.currentPlayTime = targetTime;
-  }
 
-  getPlayTime() {
-    return this.currentPlayTime;
-  }
+    updateTimer(deltaTime)
+    {
+        this.currentPlayTime+=deltaTime;
+    }
 
-  stop() {
-    this.currentPlayTime = 0;
-  }
+    setPlayTime(targetTime)
+    {
+        this.currentPlayTime=targetTime;
+    }
+
+    getPlayTime()
+    {
+        return this.currentPlayTime;
+    }
+
+    stop()
+    {
+        this.currentPlayTime=0;
+    }
 }

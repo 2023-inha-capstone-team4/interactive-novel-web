@@ -1,21 +1,26 @@
-.menu_button {
-  background-color: azure;
-  cursor: pointer;
+.menu_button
+{
 
-  border: 1px solid gainsboro;
+    background-color: azure;
+    cursor:pointer;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    border: 1px solid gainsboro;
 
-  flex-grow: 1;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-grow:1;
 }
 
-.menu_button:hover {
-  background-color: aquamarine;
+.menu_button:hover
+{
+    background-color: aquamarine;
 }
 
-.button_image {
-  width: 15px;
-  height: 15px;
+.button_image
+{
+    width:15px;
+    height:15px;   
 }

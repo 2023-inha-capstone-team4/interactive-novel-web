@@ -1,24 +1,32 @@
-.layer_editor_box {
-  border: 1px solid gainsboro;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: nowrap;
+.layer_editor_box
+{
+    margin:0px;
+    height:600px;
+    min-width:300px;
+    max-width:300px;
+    border: 1px solid gainsboro;
+    display:flex;
+    flex-direction: column;
+    
+    flex-wrap: nowrap;
 
-  overflow: scroll;
-  flex-grow: 1;
-  z-index: 10;
+    overflow:scroll;
+    flex-grow: 1;
+    z-index: 10;
 }
 
-.layer_editor_title {
-  text-align: center;
-  width: 100%;
-  background-color: gainsboro;
+.layer_editor_title
+{
+    text-align: center;
+    width:100%;
+    background-color: gainsboro;
 }
 
-.layer_list {
-  display: flex;
-  flex-direction: column-reverse;
-  height: 100%;
-  overflow: scroll;
+.layer_list
+{
+    display:flex;
+    flex-direction: column-reverse;
+    height:100%;
+    overflow-y: scroll;
+
 }
