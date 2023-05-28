@@ -81,15 +81,8 @@ const style = css`
     font-weight: bold;
   }
 
-  .published-date {
-    margin: 0;
-    margin-left: 10px;
-    font-size: 12px;
-  }
-
   .rate-score {
     margin: 0;
-    margin-left: 10px;
     font-size: 12px;
   }
 
