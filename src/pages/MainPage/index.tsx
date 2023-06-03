@@ -67,7 +67,7 @@ function HotNovelsSection() {
   const [novels, setNovels] = useState<Novel[]>([]);
 
   useEffect(() => {
-    NovelAPI.hotNovels()
+    NovelAPI.hotNovels(0, 10)
       .then((resp) => setNovels(resp.data))
       .catch((e) => showAlert(e.response.data.errorMessage));
   }, []);

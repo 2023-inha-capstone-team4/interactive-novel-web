@@ -28,8 +28,8 @@ const NovelAPI = {
   /**
    * 인기 작품 조회 API입니다.
    */
-  hotNovels: () => {
-    return Client.get<Novel[]>('/novel/list/popular');
+  hotNovels: (start: number, end: number) => {
+    return Client.get<Novel[]>(`/novel/list/popular?startIdx=${start}&endIdx=${end}`);
   },
 
   /**
