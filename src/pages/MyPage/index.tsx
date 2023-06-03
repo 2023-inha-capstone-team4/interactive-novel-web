@@ -93,9 +93,7 @@ export default function MyPage() {
             <th>작가 등록</th>
             <td>
               {userInfo.author ? (
-                <>
-                  등록 안됨 <Button onClick={() => setDialogDisplayed(true)}>등록하기</Button>
-                </>
+                <>등록 완료</>
               ) : (
                 <>
                   등록 안됨 <Button onClick={() => setDialogDisplayed(true)}>등록하기</Button>
