@@ -141,7 +141,10 @@ export default function SignUpPage() {
         </Button>
       </Stack>
       <Dialog open={modalDisplayed} onClose={handleModalClose}>
-        <DialogContent>회원가입에 성공했습니다.</DialogContent>
+        <DialogContent>
+          입력하신 이메일 주소로 확인 메일이 전송되었습니다. 메일에 안내된 링크에 접속하여 계정 인증
+          후 로그인해주세요.
+        </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={() => navigate('/sign/in')}>
             로그인으로 이동
