@@ -5,8 +5,6 @@ import { MasterTimer } from '../lib/MasterTimer';
 import styles from './ClientScenesViewer.module.css';
 
 const ClientScenesViewer = ({ scenes }) => {
-  console.log('scenes : ');
-  console.log(scenes);
   const canvasRefs = useRef([]);
 
   const [sceneRenderer, setSceneRenderer] = useState(new SceneRenderer());
@@ -21,6 +19,24 @@ const ClientScenesViewer = ({ scenes }) => {
     isRenderingList.push(false);
   }
 
+  const handleScroll = () => {
+    const { scrollTop, clientHeight } = document.documentElement;
+
+    canvasRefs.current.forEach((canvasRef, index) => {
+      if (!canvasRef) return;
+      const { top, bottom } = canvasRef.getBoundingClientRect();
+
+      // Check if the canvas is within the viewport
+      if (top < clientHeight && bottom > 0) {
+        // Render and play the scene data on the canvas
+        isRenderingList[index] = true;
+      } else {
+        // Pause or stop the scene if needed
+        isRenderingList[index] = false;
+      }
+    });
+  };
+
   const mainLoop = () => {
     setTimeout(() => {
       requestAnimationFrame(mainLoop);
@@ -32,6 +48,8 @@ const ClientScenesViewer = ({ scenes }) => {
 
     renderScenes();
     applySoundSystem();
+
+    handleScroll();
   };
 
   function updateTimers(deltaTime) {
@@ -84,26 +102,6 @@ const ClientScenesViewer = ({ scenes }) => {
 
   useEffect(() => {
     mainLoop();
-
-    const handleScroll = () => {
-      const { scrollTop, clientHeight } = document.documentElement;
-
-      canvasRefs.current.forEach((canvasRef, index) => {
-        const { top, bottom } = canvasRef.getBoundingClientRect();
-
-        // Check if the canvas is within the viewport
-        if (top < clientHeight && bottom > 0) {
-          // Render and play the scene data on the canvas
-          isRenderingList[index] = true;
-        } else {
-          // Pause or stop the scene if needed
-          isRenderingList[index] = false;
-        }
-      });
-    };
-
-    // Attach the scroll event listener
-    window.addEventListener('scroll', handleScroll);
 
     // Clean up the event listener on component unmount
     return () => {
