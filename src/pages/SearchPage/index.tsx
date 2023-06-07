@@ -1,45 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchAPI from '../../api/SearchAPI';
 import { Novel } from '../../types/Novel';
 import Section from '../../components/Section';
 import NovelList from '../../components/NovelList';
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { AlertAPIContext } from '../../utils/alert';
 
 /**
  * 검색 페이지 요소입니다.
  */
 function SearchPage() {
-  const [searchParams] = useSearchParams();
-  const [sortOption, setSortOption] = useState('likes-desc');
-  const [searchResults, setSearchResults] = useState<Novel[]>([]);
+  const showAlert = useContext(AlertAPIContext);
 
-  const handleSortOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSortOption(event.target.value);
+  const [searchParams] = useSearchParams();
+  const [searchResults, setSearchResults] = useState<Novel[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const PAGE_SIZE = 15;
+
+  const keyword = searchParams.get('keyword')!;
+
+  const loadMore = () => {
+    setIsLoading(true);
+
+    const start = searchResults.length;
+    const end = start + PAGE_SIZE - 1;
+
+    SearchAPI.search(keyword, start, end)
+      .then(({ data }) => {
+        setSearchResults([...searchResults, ...data]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        showAlert(e.response.data.errorMessage);
+        setIsLoading(false);
+      });
   };
 
-  useEffect(() => {
-    const keyword = searchParams.get('keyword');
-    if (keyword) {
-      SearchAPI.search(keyword, sortOption).then((resp) => {
-        setSearchResults(resp.data);
-      });
-    }
-  }, [sortOption]);
+  useEffect(() => loadMore(), []);
 
   return (
     <Section title={`검색 결과 (${searchResults.length}건)`}>
-      <RadioGroup
-        row
-        value={sortOption}
-        onChange={handleSortOptionChange}
-        sx={{ paddingLeft: '15px' }}
-      >
-        <FormControlLabel value="likes-desc" control={<Radio />} label="좋아요 많은 순" />
-        <FormControlLabel value="date-desc" control={<Radio />} label="최신순" />
-        <FormControlLabel value="views-desc" control={<Radio />} label="조회순" />
-      </RadioGroup>
       <NovelList novels={searchResults} />
+      <Box textAlign="center" padding={1}>
+        {isLoading ? <CircularProgress /> : <Button onClick={loadMore}>더 보기</Button>}
+      </Box>
     </Section>
   );
 }

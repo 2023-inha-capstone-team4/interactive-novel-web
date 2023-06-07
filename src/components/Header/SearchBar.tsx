@@ -22,9 +22,9 @@ function SearchBar() {
         onChange={handleTextFieldChange}
         placeholder="작품명, 작가, 태그 검색"
       />
-      <PlainStyleLink to={`/search?keyword=${searchTerm}`}>
+      <a href={`/search?keyword=${searchTerm}`}>
         <SearchButton variant="contained">검색</SearchButton>
-      </PlainStyleLink>
+      </a>
     </StyledSearchBar>
   );
 }

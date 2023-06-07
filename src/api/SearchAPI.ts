@@ -5,8 +5,10 @@ const SearchAPI = {
   /**
    * 작품 검색 API입니다.
    */
-  search: (keyword: string, sort: string) => {
-    return Client.get<Novel[]>('/api-dummy/search', { params: { keyword, sort } });
+  search: (keyword: string, start: number, end: number) => {
+    return Client.get<Novel[]>('/novel/list/search', {
+      params: { keyword, startIdx: start, endIdx: end },
+    });
   },
 };
 
