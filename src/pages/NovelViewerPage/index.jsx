@@ -66,7 +66,7 @@ function NovelViewerPage() {
       <div className="viewtoolbox-container">
         <ViewerToolBox>
           <ViewerTool>좋아요</ViewerTool>
-          <ViewerTool onClick={openReviewDrawer}>리뷰 (999)</ViewerTool>
+          <ViewerTool onClick={openReviewDrawer}>리뷰</ViewerTool>
           <ViewerTool>맨 위로</ViewerTool>
           <ViewerTool onClick={() => navigate(-1)}>그만 볼래요</ViewerTool>
         </ViewerToolBox>

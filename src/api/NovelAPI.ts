@@ -36,7 +36,9 @@ const NovelAPI = {
    * 댓글 조회 API입니다.
    */
   comments: (episodeId: number, start: number, end: number, method: string) => {
-    return Client.get<Comment[]>(`/novel/comment/list/${episodeId}`);
+    return Client.get<Comment[]>(
+      `/novel/comment/list/${episodeId}?startIdx=${start}&endIdx=${end}&method=${method}`,
+    );
   },
 
   /**

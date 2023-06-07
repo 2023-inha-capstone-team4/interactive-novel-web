@@ -140,15 +140,12 @@ export default function Reviews(props: ReviewsProps) {
             <li className="reviews-list-item" key={comment.id}>
               <div className="flex-row">
                 <div>
-                  <p>
-                    <b>{comment.readerName}</b>
-                  </p>
+                  <p className="reviews-list-item-comment">{comment.comment}</p>
                 </div>
                 <Button size="small" variant="outlined" onClick={() => upvoteComment(comment.id)}>
                   {comment.recommendAmount} 추천
                 </Button>
               </div>
-              <p className="reviews-list-item-comment">{comment.comment}</p>
             </li>
           ))}
         </ul>
@@ -242,12 +239,13 @@ const style = css`
   }
 
   .reviews-list-item {
-    padding: 3px 15px;
+    padding: 25px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .reviews-list-item-comment {
     margin-top: 0;
+    margin-right: 10px;
   }
 `;
 
