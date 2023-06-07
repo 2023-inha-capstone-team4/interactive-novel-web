@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Episode } from '../../types/Novel';
 import NovelAPI from '../../api/NovelAPI';
 import { AlertAPIContext } from '../../utils/alert';
+import { Box } from '@mui/material';
 
 export default function EpisodeList({ novelId }: EpisodeListProps) {
   const showAlert = useContext(AlertAPIContext);
@@ -36,15 +37,21 @@ export default function EpisodeList({ novelId }: EpisodeListProps) {
   useEffect(() => loadMore(), []);
 
   return (
-    <ul css={episodeListStyle}>
-      {episodes.map((episode) => (
-        <EpisodeItem
-          id={episode.id}
-          title={episode.novelDetailName}
-          thumbnail={episode.novelDetailImageUrl}
-        />
-      ))}
-    </ul>
+    <>
+      {episodes.length > 0 ? (
+        <ul css={episodeListStyle}>
+          {episodes.map((episode) => (
+            <EpisodeItem
+              id={episode.id}
+              title={episode.novelDetailName}
+              thumbnail={episode.novelDetailImageUrl}
+            />
+          ))}
+        </ul>
+      ) : (
+        <Box>등록된 에피소드가 존재하지 않습니다.</Box>
+      )}
+    </>
   );
 }
 

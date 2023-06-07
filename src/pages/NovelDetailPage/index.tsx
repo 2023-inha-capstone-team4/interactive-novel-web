@@ -57,7 +57,7 @@ function NovelDetailPage() {
           <p className="description">{novel.novelIntroduce}</p>
         </Box>
         <Box paddingX="15px" paddingY="10px">
-          <h3>에피소드 (4)</h3>
+          <h3>에피소드</h3>
           <EpisodeList novelId={id} />
         </Box>
       </Section>
