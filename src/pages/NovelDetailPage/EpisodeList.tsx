@@ -3,32 +3,49 @@
 import { css } from '@emotion/react';
 import { dateToString } from '../../utils/date';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Episode } from '../../types/Novel';
+import NovelAPI from '../../api/NovelAPI';
+import { AlertAPIContext } from '../../utils/alert';
 
-export default function EpisodeList() {
+export default function EpisodeList({ novelId }: EpisodeListProps) {
+  const showAlert = useContext(AlertAPIContext);
+
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const PAGE_SIZE = 15;
+
+  // 다음 페이지 로드
+  const loadMore = () => {
+    setIsLoading(true);
+
+    const start = episodes.length;
+    const end = start + PAGE_SIZE - 1;
+
+    NovelAPI.episodes(novelId, start, end)
+      .then(({ data }) => {
+        setEpisodes([...episodes, ...data]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        showAlert(e.response.data.errorMessage);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => loadMore(), []);
+
   return (
     <ul css={episodeListStyle}>
-      <EpisodeItem
-        title="Episode 4"
-        thumbnail="http://www.sbs.com.au/theboat/images/fb-image.jpg"
-        created={new Date()}
-      />
-      <EpisodeItem
-        title="Episode 3"
-        thumbnail="http://www.sbs.com.au/theboat/images/fb-image.jpg"
-        created={new Date()}
-      />
-      <EpisodeItem
-        title="Episode 2"
-        thumbnail="http://www.sbs.com.au/theboat/images/fb-image.jpg"
-        created={new Date()}
-      />
-      <EpisodeItem
-        title="Episode 1"
-        thumbnail="http://www.sbs.com.au/theboat/images/fb-image.jpg"
-        created={new Date()}
-      />
+      {episodes.map((episode) => (
+        <EpisodeItem title={episode.novelDetailName} thumbnail={episode.novelDetailImageUrl} />
+      ))}
     </ul>
   );
+}
+
+interface EpisodeListProps {
+  novelId: number;
 }
 
 const episodeListStyle = css``;
@@ -41,7 +58,6 @@ function EpisodeItem(props: EpisodeItemProps) {
           <img src={props.thumbnail} alt="thumbnail" />
           <div className="episode-item-description">
             <h4>{props.title}</h4>
-            <p>{dateToString(props.created)}</p>
           </div>
         </div>
       </Link>
@@ -52,7 +68,6 @@ function EpisodeItem(props: EpisodeItemProps) {
 interface EpisodeItemProps {
   title: string;
   thumbnail: string;
-  created: Date;
 }
 
 const episodeItemStyle = css`

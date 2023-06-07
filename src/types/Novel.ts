@@ -16,3 +16,16 @@ export interface Comment {
   comment: string;
   recommendAmount: number;
 }
+
+export interface Episode {
+  id: number;
+  novelDetailName: string;
+  novelDetailIntroduce: string;
+  novelDetailImageUrl: string;
+  novelData: string;
+  authorId: number;
+  authorName: string;
+  novelId: number;
+  novelName: string;
+  publisherType: string;
+}

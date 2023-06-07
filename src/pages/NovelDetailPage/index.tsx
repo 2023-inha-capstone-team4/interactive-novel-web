@@ -16,7 +16,9 @@ import { css } from '@emotion/react';
 const TheBoatThumbnail = require('../../assets/img/the-boat.gif');
 
 function NovelDetailPage() {
-  const { id } = useParams();
+  const { id: idParam } = useParams();
+  const id = parseInt(idParam!);
+
   const { state: novel } = useLocation();
 
   const [bookmarked, setBookmarked] = useState(false);
@@ -47,16 +49,16 @@ function NovelDetailPage() {
           <Link className="author" to={`/publisher/${novel.authorId}`}>
             {novel.authorName}
           </Link>
-          <p className="rate-score">
+          {/* <p className="rate-score">
             평점 <b>{novel.totalScore}</b>
-          </p>
+          </p> */}
         </Stack>
         <Box paddingX="15px">
           <p className="description">{novel.novelIntroduce}</p>
         </Box>
         <Box paddingX="15px" paddingY="10px">
           <h3>에피소드 (4)</h3>
-          <EpisodeList />
+          <EpisodeList novelId={id} />
         </Box>
       </Section>
     </div>

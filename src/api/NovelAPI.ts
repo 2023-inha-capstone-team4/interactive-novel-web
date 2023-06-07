@@ -1,5 +1,5 @@
 import { findAccessToken } from '../services/auth-service';
-import { Comment, Novel } from '../types/Novel';
+import { Comment, Episode, Novel } from '../types/Novel';
 import { Review } from '../types/Review';
 import Client from './client';
 
@@ -66,6 +66,26 @@ const NovelAPI = {
    */
   upvoteComment: (commendId: number) => {
     return Client.post<void>(`/novel/comment/recommend/${commendId}`);
+  },
+
+  /**
+   * 작품의 에피소드 목록을 조회하는 API입니다.
+   */
+  episodes: (novelId: number, start: number, end: number, order: string = 'desc') => {
+    return Client.get<Episode[]>(
+      `/novel/list/detail/${novelId}?startIdx=${start}&endIdx=${end}&order=${order}`,
+    );
+  },
+
+  /**
+   * 회차 데이터를 조회하는 API입니다.
+   */
+  episode: (episodeId: number) => {
+    return Client.get<Episode>(`/novel/view/${episodeId}`, {
+      headers: {
+        Authorization: `Bearer ${findAccessToken()}`,
+      },
+    });
   },
 };
 
