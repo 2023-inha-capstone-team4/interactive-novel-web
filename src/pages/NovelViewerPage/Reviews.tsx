@@ -102,7 +102,15 @@ export default function Reviews(props: ReviewsProps) {
 
         setComments(updatedComments);
       })
-      .catch((e) => showAlert(e.response.data.errorMessage));
+      .catch((e) => {
+        const { errorCode, errorMessage } = e.response.data;
+
+        if (errorCode === 'TOKEN_NOT_FOUND') {
+          showAlert('로그인이 필요한 기능입니다.');
+        } else {
+          showAlert(errorMessage);
+        }
+      });
   };
 
   useEffect(() => {

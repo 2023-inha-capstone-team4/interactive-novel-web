@@ -67,7 +67,15 @@ const NovelAPI = {
    * 댓글 추천 API입니다.
    */
   upvoteComment: (commendId: number) => {
-    return Client.post<void>(`/novel/comment/recommend/${commendId}`);
+    return Client.post<void>(
+      `/novel/comment/recommend/${commendId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${findAccessToken()}`,
+        },
+      },
+    );
   },
 
   /**
