@@ -3,12 +3,13 @@ import HorizontalSlider from '../../components/HorizontalSlider';
 import Section from '../../components/Section';
 import { useContext, useEffect, useState } from 'react';
 import NovelCard from './NovelCard';
-import { Tab, Tabs } from '@mui/material';
+import { Box, Button, CircularProgress, Tab, Tabs } from '@mui/material';
 import TabPanel from '../../components/TabPanel';
 import NovelList from '../../components/NovelList';
 import { useLocation } from 'react-router-dom';
 import NovelAPI from '../../api/NovelAPI';
 import { AlertAPIContext } from '../../utils/alert';
+import { Category } from '../../types/enums/Category';
 
 /**
  * 메인 페이지 요소입니다.
@@ -93,44 +94,64 @@ function CategorizedNovels() {
     setCurrentTab(newValue);
   };
 
+  const categories = Object.entries(Category);
+
   return (
     <Section id="category" title="카테고리">
       <Tabs value={currentTab} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
-        {categories.map((category: string) => (
-          <Tab label={category} />
+        {categories.map(([key, name]) => (
+          <Tab label={name} />
         ))}
       </Tabs>
-      {categories.map((category: string, index: number) => (
+      {categories.map(([key, name], index: number) => (
         <TabPanel value={currentTab} index={index}>
-          <NovelListForCategory category={category} />
+          <NovelListForCategory categoryKey={key} />
         </TabPanel>
       ))}
     </Section>
   );
 }
 
-const categories = [
-  '로맨스',
-  '판타지',
-  '액션',
-  '일상',
-  '스릴러',
-  '개그',
-  '무협/사극',
-  '드라마',
-  '감성',
-  '스포츠',
-];
-
 /**
  * 노벨 리스트 요소입니다.
  */
 function NovelListForCategory(props: NovelListForCategoryProps) {
-  return <NovelList novels={[]} />;
+  const showAlert = useContext(AlertAPIContext);
+
+  const [novels, setNovels] = useState<Novel[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const PAGE_SIZE = 15;
+
+  const loadMore = () => {
+    setIsLoading(true);
+    const start = novels.length;
+    const end = start + PAGE_SIZE - 1;
+
+    NovelAPI.novelsByCategory(props.categoryKey, start, end)
+      .then(({ data }) => {
+        setNovels([...novels, ...data]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        showAlert(e.response.data.errorMessage);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => loadMore(), []);
+
+  return (
+    <>
+      <NovelList novels={novels} />
+      <Box textAlign="center" padding={1}>
+        {isLoading ? <CircularProgress /> : <Button onClick={loadMore}>더 보기</Button>}
+      </Box>
+    </>
+  );
 }
 
 interface NovelListForCategoryProps {
-  category: string;
+  categoryKey: string;
 }
 
 export default MainPage;

@@ -97,6 +97,17 @@ const NovelAPI = {
       },
     });
   },
+
+  /**
+   * 주어진 카테고리의 노벨 리스트를 조회하는 API입니다.
+   */
+  novelsByCategory: (categoryKey: string, start: number, end: number) => {
+    const key = categoryKey.toLowerCase();
+
+    return Client.get<Novel[]>(
+      `/novel/list/category?category=${key}&startIdx=${start}&endIdx=${end}`,
+    );
+  },
 };
 
 export default NovelAPI;
