@@ -38,7 +38,11 @@ export default function EpisodeList({ novelId }: EpisodeListProps) {
   return (
     <ul css={episodeListStyle}>
       {episodes.map((episode) => (
-        <EpisodeItem title={episode.novelDetailName} thumbnail={episode.novelDetailImageUrl} />
+        <EpisodeItem
+          id={episode.id}
+          title={episode.novelDetailName}
+          thumbnail={episode.novelDetailImageUrl}
+        />
       ))}
     </ul>
   );
@@ -53,7 +57,7 @@ const episodeListStyle = css``;
 function EpisodeItem(props: EpisodeItemProps) {
   return (
     <li>
-      <Link to="/novel/viewer/1">
+      <Link to={`/novel/viewer/${props.id}`}>
         <div css={episodeItemStyle}>
           <img src={props.thumbnail} alt="thumbnail" />
           <div className="episode-item-description">
@@ -66,6 +70,7 @@ function EpisodeItem(props: EpisodeItemProps) {
 }
 
 interface EpisodeItemProps {
+  id: number;
   title: string;
   thumbnail: string;
 }

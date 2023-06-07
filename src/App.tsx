@@ -73,7 +73,7 @@ function App() {
               <Route path="/oauth/google" element={<GoogleOAuthRedirectPage />} />
               <Route path="/oauth/naver" element={<NaverOAuthRedirectPage />} />
             </Route>
-            <Route path="/novel/viewer/:id" element={<NovelViewerPage />} />
+            <Route path="/novel/viewer/:episodeId" element={<NovelViewerPage />} />
             <Route path="/" element={<DefaultLayout />}>
               <Route path="/error" element={<ErrorPage />} />
               <Route path="*" element={<ErrorPage msg="존재하지 않는 페이지입니다." />} />

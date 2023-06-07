@@ -3,18 +3,22 @@
 import { css } from '@emotion/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ViewerTool, ViewerToolBox } from './ViewerToolBox';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CircularProgress, SwipeableDrawer } from '@mui/material';
 import Reviews from './Reviews';
 import styled from '@emotion/styled';
 import ClientScenesViewer from '../../libs/renderer/component/ClientScenesViewer';
 import { Scene } from '../../libs/renderer/lib/Scene';
+import NovelAPI from '../../api/NovelAPI';
+import { JsonParser } from '../../libs/renderer/lib/dataParser/JsonParser';
+import { AlertAPIContext } from '../../utils/alert';
 
 function NovelViewerPage() {
-  const { id: idParam } = useParams();
-  const id = parseInt(idParam);
+  const { episodeId: idParam } = useParams();
+  const episodeId = parseInt(idParam);
 
   const navigate = useNavigate();
+  const showAlert = useContext(AlertAPIContext);
 
   const [scenes, setScenes] = useState(null);
   const [reviewDrawerOpen, setReviewDrawerOpen] = useState(false);
@@ -23,8 +27,13 @@ function NovelViewerPage() {
   const closeReviewDrawer = () => setReviewDrawerOpen(false);
 
   const loadScenes = () => {
-    // Scene API 호출
-    setScenes([]);
+    NovelAPI.episode(episodeId)
+      .then((resp) => {
+        const jsonData = resp.data.novelData;
+        const parsedData = JsonParser.jsonToSceneList(jsonData);
+        setScenes(parsedData);
+      })
+      .catch((e) => showAlert(e.response.data.errorMessage));
   };
 
   useEffect(() => {
@@ -52,7 +61,7 @@ function NovelViewerPage() {
         onOpen={openReviewDrawer}
         onClose={closeReviewDrawer}
       >
-        <Reviews episodeId={id} />
+        <Reviews episodeId={episodeId} />
       </SwipeableDrawer>
       <div className="viewtoolbox-container">
         <ViewerToolBox>
