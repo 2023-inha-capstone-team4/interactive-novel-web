@@ -1,10 +1,10 @@
 export interface Novel {
   id: number;
   novelName: string;
+  novelImageUrl: string;
   authorId: number;
   authorName: string;
   novelIntroduce: string;
-  novelImageUrl: string;
   publisherType: string;
   totalScore: number;
 }
@@ -28,4 +28,10 @@ export interface Episode {
   novelId: number;
   novelName: string;
   publisherType: string;
+}
+
+export interface BookmarkedNovel {
+  novelId: number;
+  novelImageUrl: number;
+  novelName: string;
 }

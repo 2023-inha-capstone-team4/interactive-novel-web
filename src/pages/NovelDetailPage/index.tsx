@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Novel } from '../../types/Novel';
 import NovelAPI from '../../api/NovelAPI';
@@ -12,10 +12,14 @@ import PlayButton from './PlayButton';
 import BookmarkToggleButton from './BookmarkToggleButton';
 import EpisodeList from './EpisodeList';
 import { css } from '@emotion/react';
+import UserAPI from '../../api/UserAPI';
+import { AlertAPIContext } from '../../utils/alert';
 
 const TheBoatThumbnail = require('../../assets/img/the-boat.gif');
 
 function NovelDetailPage() {
+  const showAlert = useContext(AlertAPIContext);
+
   const { id: idParam } = useParams();
   const id = parseInt(idParam!);
 
@@ -24,8 +28,20 @@ function NovelDetailPage() {
   const [bookmarked, setBookmarked] = useState(false);
 
   const toggleBookmark = () => {
-    setBookmarked(!bookmarked);
+    UserAPI.toggleNovelBookmark(id)
+      .then(() => {
+        setBookmarked(!bookmarked);
+      })
+      .catch((e) => {
+        showAlert(e.response.data.errorMessage);
+      });
   };
+
+  useEffect(() => {
+    UserAPI.isNovelBookmarked(id).then(({ data }) => {
+      setBookmarked(data);
+    });
+  }, []);
 
   // 로딩 뷰
   if (!novel) {

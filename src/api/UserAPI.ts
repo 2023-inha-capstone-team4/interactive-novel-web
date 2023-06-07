@@ -1,5 +1,5 @@
 import { findAccessToken } from '../services/auth-service';
-import { Novel } from '../types/Novel';
+import { BookmarkedNovel, Novel } from '../types/Novel';
 import { User } from '../types/User';
 import Client from './client';
 
@@ -7,8 +7,38 @@ const UserAPI = {
   /**
    * 북마크 작품 조회 API입니다.
    */
-  findBookmarks: () => {
-    return Client.get<Novel[]>('/api-dummy/user/bookmark');
+  bookmarkedNovels: () => {
+    return Client.get<BookmarkedNovel[]>('/bookmark/novel', {
+      headers: {
+        Authorization: `Bearer ${findAccessToken()}`,
+      },
+    });
+  },
+
+  /**
+   * 특정 작품의 북마크 여부를 조회합니다.
+   */
+  isNovelBookmarked: (novelId: number) => {
+    return Client.get<boolean>(`/bookmark/novel/${novelId}`, {
+      headers: {
+        Authorization: `Bearer ${findAccessToken()}`,
+      },
+    });
+  },
+
+  /**
+   * 작품을 북마크합니다.
+   */
+  toggleNovelBookmark: (novelId: number) => {
+    return Client.post(
+      `/bookmark/novel/${novelId}/set`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${findAccessToken()}`,
+        },
+      },
+    );
   },
 
   /**

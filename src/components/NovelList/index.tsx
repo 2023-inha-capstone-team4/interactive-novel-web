@@ -1,16 +1,25 @@
 import styled from '@emotion/styled';
 import { Novel } from '../../types/Novel';
 import FullWidthNovelCard from './FullWidthNovelCard';
+import { Box } from '@mui/material';
 
 function NovelList(props: NovelListProps) {
   return (
-    <StyledList>
-      {props.novels.map((novel: Novel) => (
-        <li key={novel.id}>
-          <FullWidthNovelCard novel={novel} href={`/novel/${novel.id}`} />
-        </li>
-      ))}
-    </StyledList>
+    <>
+      {props.novels.length > 0 ? (
+        <StyledList>
+          {props.novels.map((novel: Novel) => (
+            <li key={novel.id}>
+              <FullWidthNovelCard novel={novel} href={`/novel/${novel.id}`} />
+            </li>
+          ))}
+        </StyledList>
+      ) : (
+        <Box textAlign="center" padding={5}>
+          <small>항목이 존재하지 않습니다.</small>
+        </Box>
+      )}
+    </>
   );
 }
 

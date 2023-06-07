@@ -8,11 +8,22 @@ function BookmarkPage() {
   const [novels, setNovels] = useState<Novel[]>([]);
 
   useEffect(() => {
-    UserAPI.findBookmarks().then((resp) => setNovels(resp.data));
+    UserAPI.bookmarkedNovels().then(({ data }) => {
+      const novels = data.map(
+        (bookmark) =>
+          ({
+            id: bookmark.novelId,
+            novelName: bookmark.novelName,
+            novelImageUrl: bookmark.novelImageUrl,
+          } as any as Novel),
+      );
+
+      setNovels(novels);
+    });
   }, []);
 
   return (
-    <Section title="북마크" description="좋아요한 작품들">
+    <Section title="북마크" description="내가 북마크한 작품들">
       <NovelList novels={novels} />
     </Section>
   );
