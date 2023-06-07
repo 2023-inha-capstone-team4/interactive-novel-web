@@ -7,11 +7,10 @@ import { useContext, useEffect, useState } from 'react';
 import { CircularProgress, SwipeableDrawer } from '@mui/material';
 import Reviews from './Reviews';
 import styled from '@emotion/styled';
-import ClientScenesViewer from '../../libs/renderer/component/ClientScenesViewer';
-import { Scene } from '../../libs/renderer/lib/Scene';
 import NovelAPI from '../../api/NovelAPI';
-import { JsonParser } from '../../libs/renderer/lib/dataParser/JsonParser';
 import { AlertAPIContext } from '../../utils/alert';
+import ClientScenesViewer from '../../libs/editor/src/component/ClientScenesViewer';
+import { JsonParser } from '../../libs/editor/src/lib/dataParser/JsonParser';
 
 function NovelViewerPage() {
   const { episodeId: idParam } = useParams();
