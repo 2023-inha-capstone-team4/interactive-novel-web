@@ -40,7 +40,7 @@ function SocialLogin() {
       <Divider variant="middle" />
       <Title>다른 계정으로 로그인</Title>
       <Stack direction="row" justifyContent="center" spacing={2}>
-        <SocialLoginButton icon={googleLogo} title="Google" href={googleLoginUrl} />
+        {/* <SocialLoginButton icon={googleLogo} title="Google" href={googleLoginUrl} /> */}
         <SocialLoginButton icon={naverLogo} title="네이버" href={naverLoginUrl} />
       </Stack>
     </>
