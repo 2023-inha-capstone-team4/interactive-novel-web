@@ -134,7 +134,7 @@ export default function SignUpPage() {
             onChange={inputChangeHandler(setPassword)}
             fullWidth
           />
-          <FormHelperText id="input-password">비밀번호 형식은 ...입니다.</FormHelperText>
+          {/* <FormHelperText id="input-password">비밀번호 형식은 ...입니다.</FormHelperText> */}
         </FormControl>
         <Button onClick={submit} variant="contained" fullWidth>
           회원가입
