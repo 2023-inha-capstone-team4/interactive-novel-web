@@ -15,17 +15,19 @@ import { Category } from '../../types/enums/Category';
  * 메인 페이지 요소입니다.
  */
 function MainPage() {
-  const location = useLocation();
+  const { hash } = useLocation();
 
   // URL Fragement 발견 시 해당 요소 위치로 스크롤
   useEffect(() => {
-    if (location.hash) {
-      const target = document.querySelector(location.hash);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
       }
-    }
-  }, [location.hash]);
+    }, 100);
+  }, [hash]);
 
   return (
     <>
@@ -100,11 +102,11 @@ function CategorizedNovels() {
     <Section id="category" title="카테고리">
       <Tabs value={currentTab} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
         {categories.map(([key, name]) => (
-          <Tab label={name} />
+          <Tab label={name} key={key} />
         ))}
       </Tabs>
       {categories.map(([key, name], index: number) => (
-        <TabPanel value={currentTab} index={index}>
+        <TabPanel value={currentTab} index={index} key={key}>
           <NovelListForCategory categoryKey={key} />
         </TabPanel>
       ))}
