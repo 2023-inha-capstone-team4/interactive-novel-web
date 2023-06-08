@@ -50,7 +50,9 @@ function SigninHeader() {
         <ArrowBackRoundedIcon />
       </IconButton>
       <Box textAlign="center" paddingTop={2} paddingBottom={5}>
-        <PlainStyleLink to="/">LOGO</PlainStyleLink>
+        <PlainStyleLink to="/">
+          <b style={{ fontWeight: 800 }}>Interactive Novels</b>
+        </PlainStyleLink>
       </Box>
     </Box>
   );
