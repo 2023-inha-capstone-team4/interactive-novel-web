@@ -66,7 +66,9 @@ function NovelViewerPage() {
         <ViewerToolBox>
           {/* <ViewerTool>좋아요</ViewerTool> */}
           <ViewerTool onClick={openReviewDrawer}>댓글</ViewerTool>
-          <ViewerTool>맨 위로</ViewerTool>
+          <ViewerTool onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            맨 위로
+          </ViewerTool>
           <ViewerTool onClick={() => navigate(-1)}>그만 볼래요</ViewerTool>
         </ViewerToolBox>
       </div>
