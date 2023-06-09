@@ -50,15 +50,15 @@ export default function Reviews(props: ReviewsProps) {
   /**
    * 댓글을 `PAGE_SIZE`만큼 더 로드합니다.
    */
-  const loadMoreComments = () => {
+  const loadMoreComments = (pastComments: Comment[]) => {
     setIsLoading(true);
 
-    const startIdx = comments.length;
+    const startIdx = pastComments.length;
     const endIdx = startIdx + PAGE_SIZE - 1;
 
     NovelAPI.comments(props.episodeId, startIdx, endIdx, sortOption)
       .then(({ data }) => {
-        setComments([...comments, ...data]);
+        setComments([...pastComments, ...data]);
         setIsLoading(false);
       })
       .catch((e) => {
@@ -71,16 +71,7 @@ export default function Reviews(props: ReviewsProps) {
    * 댓글을 처음부터 다시 로드합니다.
    */
   const reloadComments = () => {
-    setComments([]);
-    loadMoreComments();
-  };
-
-  /**
-   * 정렬 기준을 변경하고, 댓글을 다시 로드합니다.
-   */
-  const changeSortOption = (option: string) => {
-    setSortOption(option);
-    reloadComments(); // 댓글 새로고침
+    loadMoreComments([]);
   };
 
   /**
@@ -114,8 +105,8 @@ export default function Reviews(props: ReviewsProps) {
   };
 
   useEffect(() => {
-    loadMoreComments();
-  }, []);
+    reloadComments();
+  }, [sortOption]);
 
   return (
     <div css={style}>
@@ -126,13 +117,13 @@ export default function Reviews(props: ReviewsProps) {
           <ul className="reviews-sort-options">
             <li
               className={`${sortOption !== 'popular' && 'unselected'}`}
-              onClick={() => changeSortOption('popular')}
+              onClick={() => setSortOption('popular')}
             >
               추천순
             </li>
             <li
               className={`${sortOption !== 'new' && 'unselected'}`}
-              onClick={() => changeSortOption('new')}
+              onClick={() => setSortOption('new')}
             >
               최신순
             </li>
@@ -158,7 +149,11 @@ export default function Reviews(props: ReviewsProps) {
           ))}
         </ul>
         <Box paddingY={2} textAlign="center">
-          {isLoading ? <CircularProgress /> : <Button onClick={loadMoreComments}>더 보기</Button>}
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Button onClick={() => loadMoreComments(comments)}>더 보기</Button>
+          )}
         </Box>
       </div>
       <Dialog open={dialogOpen} fullWidth onClose={() => setDialogOpen(false)}>
