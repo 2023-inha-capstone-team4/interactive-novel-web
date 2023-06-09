@@ -48,6 +48,7 @@ const NovelAPI = {
     return Client.post<Comment>(`/novel/comment/${episodeId}`, comment, {
       headers: {
         Authorization: `Bearer ${findAccessToken()}`,
+        'Content-Type': 'text/plain',
       },
     });
   },
