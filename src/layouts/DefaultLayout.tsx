@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styled from '@emotion/styled';
+import ServiceLinks from '../components/ServiceLinks';
 
 /**
  * 기본 페이지 레이아웃입니다.
@@ -10,6 +11,7 @@ function DefaultLayout() {
   return (
     <Background>
       <Content>
+        <ServiceLinks />
         <Header />
         <Outlet />
         <Footer />
