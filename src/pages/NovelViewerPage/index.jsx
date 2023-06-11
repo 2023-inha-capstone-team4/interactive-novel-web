@@ -78,12 +78,12 @@ function NovelViewerPage() {
 
 const style = css`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #0f0f0f;
 
   .canvas-container {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     max-width: 700px;
     margin: 0 auto;
 
