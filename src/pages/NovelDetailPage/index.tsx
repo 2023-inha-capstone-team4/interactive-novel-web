@@ -2,13 +2,8 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Novel } from '../../types/Novel';
-import NovelAPI from '../../api/NovelAPI';
 import Section from '../../components/Section';
-import { Box, Button, CircularProgress, Stack } from '@mui/material';
-import styled from '@emotion/styled';
-import { dateToString } from '../../utils/date';
-import PlayButton from './PlayButton';
+import { Box, Button, CircularProgress, Stack, SwipeableDrawer } from '@mui/material';
 import BookmarkToggleButton from './BookmarkToggleButton';
 import EpisodeList from './EpisodeList';
 import { css } from '@emotion/react';
@@ -26,6 +21,9 @@ function NovelDetailPage() {
   const { state: novel } = useLocation();
 
   const [bookmarked, setBookmarked] = useState(false);
+
+  // 상태: 리뷰 창 열려 있는지의 여부
+  const [reviewDrawerOpen, setReviewDrawerOpen] = useState(false);
 
   const toggleBookmark = () => {
     UserAPI.toggleNovelBookmark(id)
@@ -72,11 +70,25 @@ function NovelDetailPage() {
         <Box paddingX="15px">
           <p className="description">{novel.novelIntroduce}</p>
         </Box>
+        <Stack direction="row" justifyContent="space-between" paddingX="15px">
+          <p className="rate-score">
+            평점 <b>{novel.totalScore}</b>
+          </p>
+          <Button onClick={() => setReviewDrawerOpen(true)}>리뷰 보기</Button>
+        </Stack>
         <Box paddingX="15px" paddingY="10px">
           <h3>에피소드</h3>
           <EpisodeList novelId={id} />
         </Box>
       </Section>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={reviewDrawerOpen}
+        onOpen={() => setReviewDrawerOpen(true)}
+        onClose={() => setReviewDrawerOpen(false)}
+      >
+        <></>
+      </SwipeableDrawer>
     </div>
   );
 }
@@ -100,8 +112,7 @@ const style = css`
   }
 
   .rate-score {
-    margin: 0;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .description {
