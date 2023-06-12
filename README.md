@@ -4,7 +4,7 @@ Interactive Novel 웹 프론트엔드 레포지터리입니다.
 
 [바로가기](http://interactive-novel-web.s3-website.kr.object.ncloudstorage.com/)
 
-## 실행
+## 실행 절차
 
 ### 0. 개발 환경 구성
 
