@@ -71,11 +71,18 @@ function NovelDetailPage() {
         <Box paddingX="15px">
           <p className="description">{novel.novelIntroduce}</p>
         </Box>
-        <Stack direction="row" justifyContent="space-between" paddingX="15px">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          paddingX="15px"
+          marginTop="30px"
+          sx={{ borderTop: 1, borderBottom: 1, borderColor: '#ccc' }}
+          onClick={() => setReviewDrawerOpen(true)}
+        >
           <p className="rate-score">
-            평점 <b>{novel.totalScore}</b>
+            별점 <b>{novel.totalScore}</b>
           </p>
-          <Button onClick={() => setReviewDrawerOpen(true)}>리뷰 보기</Button>
+          <Button>리뷰 보기</Button>
         </Stack>
         <Box paddingX="15px" paddingY="10px">
           <h3>에피소드</h3>
