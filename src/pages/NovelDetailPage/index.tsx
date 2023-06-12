@@ -80,7 +80,7 @@ function NovelDetailPage() {
           onClick={() => setReviewDrawerOpen(true)}
         >
           <p className="rate-score">
-            별점 <b>{novel.totalScore}</b>
+            평점 총합 <b>{novel.totalScore}</b>
           </p>
           <Button>리뷰 보기</Button>
         </Stack>
