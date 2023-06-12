@@ -71,6 +71,12 @@ const Description = styled.p`
   margin: 5px 0px;
   font-size: 12px;
   color: #797979;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export default FullWidthNovelCard;
