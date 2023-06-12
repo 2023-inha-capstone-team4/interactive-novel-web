@@ -124,6 +124,9 @@ export default function ReviewDrawerContent({ novelId }: ReviewDrawerContentProp
             <li className="reviews-list-item" key={review.id}>
               <div className="flex-row">
                 <div>
+                  <p>
+                    <b>{review.novelScore}</b>점
+                  </p>
                   <p className="reviews-list-item-comment">{review.review}</p>
                 </div>
               </div>
