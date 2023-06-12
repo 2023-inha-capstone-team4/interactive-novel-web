@@ -1,7 +1,9 @@
 export interface Review {
   id: number;
-  readerName: string;
-  likes: number;
-  created: Date;
-  comment: string;
+  novelId: number;
+  novelScore: number;
+  publisherType: string;
+  review: string;
+  reviewerId: string;
+  reviewerName: string;
 }

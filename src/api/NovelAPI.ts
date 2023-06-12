@@ -12,13 +12,6 @@ const NovelAPI = {
   },
 
   /**
-   * 작품 리뷰 조회 API입니다.
-   */
-  findReviews: (id: number) => {
-    return Client.get<Review[]>(`/api-dummy/novel/reviews`);
-  },
-
-  /**
    * 신규 작품 조회 API입니다.
    */
   newNovels: () => {
@@ -107,6 +100,41 @@ const NovelAPI = {
 
     return Client.get<Novel[]>(
       `/novel/list/category?category=${key}&startIdx=${start}&endIdx=${end}`,
+    );
+  },
+
+  /**
+   * 리뷰 조회 API입니다.
+   *
+   * @param method new | popular
+   * @param order asc | desc
+   */
+  reviews: (novelId: number, start: number, end: number, method: string, order: string) => {
+    return Client.get<Review[]>(`/novel/review/list/${novelId}`, {
+      params: {
+        startIdx: start,
+        endIdx: end,
+        method,
+        order,
+      },
+      headers: {
+        Authorization: `Bearer ${findAccessToken()}`,
+      },
+    });
+  },
+
+  /**
+   * 리뷰 작성 API입니다.
+   */
+  createReview: (novelId: number, novelScore: number, review: string) => {
+    return Client.post(
+      `/novel/review/${novelId}`,
+      { novelScore, review },
+      {
+        headers: {
+          Authorization: `Bearer ${findAccessToken()}`,
+        },
+      },
     );
   },
 };
