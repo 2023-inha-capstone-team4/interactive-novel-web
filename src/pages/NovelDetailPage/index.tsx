@@ -9,6 +9,7 @@ import EpisodeList from './EpisodeList';
 import { css } from '@emotion/react';
 import UserAPI from '../../api/UserAPI';
 import { AlertAPIContext } from '../../utils/alert';
+import ReviewDrawerContent from './ReviewDrawerContent';
 
 const TheBoatThumbnail = require('../../assets/img/the-boat.gif');
 
@@ -87,7 +88,7 @@ function NovelDetailPage() {
         onOpen={() => setReviewDrawerOpen(true)}
         onClose={() => setReviewDrawerOpen(false)}
       >
-        <></>
+        <ReviewDrawerContent novelId={novel.id} />
       </SwipeableDrawer>
     </div>
   );
