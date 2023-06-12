@@ -125,7 +125,7 @@ export default function ReviewDrawerContent({ novelId }: ReviewDrawerContentProp
               <div className="flex-row">
                 <div>
                   <p>
-                    <b>{review.novelScore}</b>점
+                    평점 <b>{review.novelScore}</b>점
                   </p>
                   <p className="reviews-list-item-comment">{review.review}</p>
                 </div>
@@ -144,7 +144,7 @@ export default function ReviewDrawerContent({ novelId }: ReviewDrawerContentProp
       <Dialog open={dialogOpen} fullWidth onClose={() => setDialogOpen(false)}>
         <DialogTitle>리뷰 작성</DialogTitle>
         <DialogContent>
-          <h4>별점 ({inputScore}점)</h4>
+          <h4>평점 ({inputScore}점)</h4>
           <Rating
             name="simple-controlled"
             value={inputScore}
