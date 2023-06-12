@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Episode } from '../../types/Novel';
 import NovelAPI from '../../api/NovelAPI';
 import { AlertAPIContext } from '../../utils/alert';
-import { Box } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 
 export default function EpisodeList({ novelId }: EpisodeListProps) {
   const showAlert = useContext(AlertAPIContext);
@@ -51,6 +51,9 @@ export default function EpisodeList({ novelId }: EpisodeListProps) {
       ) : (
         <Box>등록된 에피소드가 존재하지 않습니다.</Box>
       )}
+      <Box textAlign="center">
+        {isLoading ? <CircularProgress /> : <Button onClick={loadMore}>더 보기</Button>}
+      </Box>
     </>
   );
 }
